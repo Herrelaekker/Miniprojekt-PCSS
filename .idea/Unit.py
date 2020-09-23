@@ -9,8 +9,8 @@ class unit(object):
     icon = cv.imread("Warrior.png")
 
     def __init__(self, cost, attackPower, icon):
-        self.attackPower = attackPower
         self.cost = cost
+        self.attackPower = attackPower
         self.icon = icon
 
 
