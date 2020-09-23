@@ -2,7 +2,7 @@ import cv2 as cv
 from Unit import unit
 class player(object):
     """
-        unit
+        player
     """
 
     totalPower = 0
@@ -23,12 +23,13 @@ class player(object):
             print(self.totalPower)
 
     def getTotalPower(self):
+        self.calcPower()
         return self.totalPower
 
 
-img=cv.imread("Warrior.png")
-team=[unit(2,1,img),unit(3,2,img)]
+# img=cv.imread("Warrior.png")
+# team=[unit(2,1,img),unit(3,2,img)]
 
-p1 = player(team)
-p1.calcPower()
-print(p1.getTotalPower())
+# p1 = player(team)
+# p1.calcPower()
+# print(p1.getTotalPower())
