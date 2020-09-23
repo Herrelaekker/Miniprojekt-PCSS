@@ -1,8 +1,8 @@
 
 
 #sluk for gaming
-gaming = true;
+gaming = True
 
 if gaming:
-    gaming = false
+    gaming = False
 
