@@ -1,8 +1,8 @@
 import cv2 as cv
 
-attackPower = 0
-cost = 0
-icon = cv.imread("intro_ball.gif")
+attackPower = 238
+cost = 10
+icon = cv.imread("Warrior.png")
 
 
 def getAttackPower():
@@ -15,3 +15,10 @@ def getCost():
 
 def getIcon():
     return icon
+
+
+print(getAttackPower())
+print(getCost())
+
+cv.imshow("Icon", getIcon())
+cv.waitKey(0)
