@@ -1,24 +1,26 @@
 import cv2 as cv
+class unit(object):
+    """
+        unit
+    """
 
-attackPower = 238
-cost = 10
-icon = cv.imread("Warrior.png")
+    attackPower = 238
+    cost = 10
+    icon = cv.imread("Warrior.png")
 
-
-def getAttackPower():
-    return attackPower
-
-
-def getCost():
-    return cost
-
-
-def getIcon():
-    return icon
+    def __init__(self, cost, attackPower, icon):
+        self.attackPower = attackPower
+        self.cost = cost
+        self.__icon = icon
 
 
-print(getAttackPower())
-print(getCost())
+    def getAttackPower(self):
+        return self.attackPower
 
-cv.imshow("Icon", getIcon())
-cv.waitKey(0)
+
+    def getCost(self):
+        return self.cost
+
+
+    def getIcon(self):
+        return self.icon
