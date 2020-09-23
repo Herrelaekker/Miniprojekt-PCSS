@@ -11,7 +11,7 @@ class unit(object):
     def __init__(self, cost, attackPower, icon):
         self.attackPower = attackPower
         self.cost = cost
-        self.__icon = icon
+        self.icon = icon
 
 
     def getAttackPower(self):
