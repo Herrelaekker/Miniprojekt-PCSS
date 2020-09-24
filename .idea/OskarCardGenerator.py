@@ -1,17 +1,20 @@
 from PIL import Image
 from Unit import unit
-import cv2 as cv
 
 class cardGenerator (unit):
-    statsBar = Image.open("icons\statsBar.png")
+    statsBar = Image.open('icons\statsBar.png')
     nameBar = Image.open('icons\mameBar.png')
     icon = Image.open('icons\character.png')
     attackPower = 10
-    def __init__(self, unit):
+
+    def __init__(self):
+        self.statsBar = Image.open('icons\statsBar.png')
+        self.nameBar = Image.open('icons\mameBar.png')
+        self.icon = Image.open('icons\character.png')
+        self.attackPower = 10
+    def createCard(self, unit):
         self.icon = unit.getIcon()
         self.attackPower = unit.getAttackPower()
-
-    def createCard(self):
         image1 = self.statsBar.resize((100, 500))
         image2 = self.icon.resize((400, 400))
         image3 = self.nameBar.resize((400, 100))
@@ -32,10 +35,3 @@ class cardGenerator (unit):
     def debug(self):
         print(self.attackPower)
 
-
-q = unit(20, 200, Image.open('icons\character02.png.png'))
-
-cardGen = cardGenerator(q)
-
-cardGen.debug()
-cardGen.createCard()
