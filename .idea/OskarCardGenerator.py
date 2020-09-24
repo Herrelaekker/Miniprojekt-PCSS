@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 from Unit import unit
 
 class cardGenerator (unit):
@@ -29,9 +29,37 @@ class cardGenerator (unit):
         new_image.paste(image1, (0, 0))
         new_image.paste(image2, (image1_size[0], 0))
         new_image.paste(image3, (100, image2_size[0]))
-        # new_image.save("images/merged_image.jpg","JPEG")
-        new_image.show()
+        new_image.save("cards\merged_image.png","PNG")
+        #new_image.show()
+
+        # get an image
+        base = Image.open("cards\merged_image.png").convert("RGBA")
+
+        # make a blank image for the text, initialized to transparent text color
+        txt = Image.new("RGBA", base.size, (255, 255, 255, 0))
+
+        # get a font
+        fnt = ImageFont.truetype("fonts\BebasNeue-Regular.ttf", 40)
+        # get a drawing context
+        d = ImageDraw.Draw(txt)
+
+        # draw text, half opacity
+        d.text((30, 110), str(unit.getAttackPower()), font=fnt, fill=(0, 0, 0, 255))
+        # draw text, full opacity
+        d.text((30, 420), str(unit.getCost()), font=fnt, fill=(0, 0, 0, 255))
+
+        out = Image.alpha_composite(base, txt)
+
+        out.show()
+
+
+
+
 
     def debug(self):
         print(self.attackPower)
 
+testUnit = unit(20, 200, Image.open('icons\character.png'))
+
+cardGen = cardGenerator()
+cardGen.createCard(testUnit)
