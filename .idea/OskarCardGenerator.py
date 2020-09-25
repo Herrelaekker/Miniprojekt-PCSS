@@ -6,6 +6,7 @@ class cardGenerator (unit):
     nameBar = Image.open('icons\mameBar.png')
     icon = Image.open('icons\character.png')
     attackPower = 10
+    name = 'default name'
 
     def __init__(self):
         self.statsBar = Image.open('icons\statsBar.png')
@@ -15,6 +16,8 @@ class cardGenerator (unit):
     def createCard(self, unit):
         self.icon = unit.getIcon()
         self.attackPower = unit.getAttackPower()
+        self.name = unit.getName()
+
         image1 = self.statsBar.resize((100, 500))
         image2 = self.icon.resize((400, 400))
         image3 = self.nameBar.resize((400, 100))
@@ -48,6 +51,8 @@ class cardGenerator (unit):
         # draw text, full opacity
         d.text((30, 420), str(unit.getCost()), font=fnt, fill=(0, 0, 0, 255))
 
+        d.text((300, 420), unit.getName(), font=fnt, fill=(0, 0, 0, 255))
+
         out = Image.alpha_composite(base, txt)
 
         out.show()
@@ -59,7 +64,7 @@ class cardGenerator (unit):
     def debug(self):
         print(self.attackPower)
 
-testUnit = unit(20, 200, Image.open('icons\character.png'))
+testUnit = unit(20, 200, Image.open('icons\character.png'), 'Epic Gamer')
 
 cardGen = cardGenerator()
 cardGen.createCard(testUnit)

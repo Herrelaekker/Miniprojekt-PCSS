@@ -13,6 +13,7 @@ class unit(object):
         self.cost = cost
         self.attackPower = attackPower
         self.icon = icon
+        self.name = name
 
 
     def getAttackPower(self):
@@ -25,6 +26,6 @@ class unit(object):
 
     def getIcon(self):
         return self.icon
-    
+
     def getName(self):
         return self.name
