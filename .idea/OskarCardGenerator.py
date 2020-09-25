@@ -1,7 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 from Unit import unit
 
-class cardGenerator ():
+class cardGenerator (unit):
     statsBar = Image.open('icons\statsBar.png')
     nameBar = Image.open('icons\mameBar.png')
     icon = Image.open('icons\character.png')
