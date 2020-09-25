@@ -16,10 +16,10 @@ images = [Image.open("Warrior.png"), Image.open("./UnitsJacob/Ninja.png"), Image
 img2 = img.resize((25,100))
 my_img2 = ImageTk.PhotoImage(img2)
 
-unitList = [unit(1,1,images[0])]*0 #Liste over units på venstre side
-teamList = [unit(3,3,images[0])]*0 #Liste over units på højre side
+unitList = [unit(1,1,images[0],"")]*0 #Liste over units på venstre side
+teamList = [unit(3,3,images[0],"")]*0 #Liste over units på højre side
 
-unitList = [unit(2,1,images[0]),unit(1,5,images[1]),unit(10,2,images[2]),]
+unitList = [unit(2,1,images[0],""),unit(1,5,images[1],""),unit(10,2,images[2],""),]
 
 row1 = 5 #Rækker af felter der skal laves
 col1 = 5 #Kolonner i første antal felter (Unit Listen)
