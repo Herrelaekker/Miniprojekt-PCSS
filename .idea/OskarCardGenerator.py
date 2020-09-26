@@ -13,10 +13,11 @@ class cardGenerator (unit):
         self.nameBar = Image.open('icons\mameBar.png')
         self.icon = Image.open('icons\character.png')
         self.attackPower = 10
-    def createCard(self, unit):
+    def createCard(self, unit, fileNumber):
         self.icon = unit.getIcon()
         self.attackPower = unit.getAttackPower()
         self.name = unit.getName()
+        fileName = 'characterCard'+str(fileNumber)+'.png'
 
         image1 = self.statsBar.resize((100, 500))
         image2 = self.icon.resize((400, 400))
@@ -54,7 +55,8 @@ class cardGenerator (unit):
         d.text((300, 420), unit.getName(), font=fnt, fill=(0, 0, 0, 255))
 
         out = Image.alpha_composite(base, txt)
-
+        out.save('cards/'+fileName, 'PNG')
+        fileName = 'characterCard' + str(fileNumber) + '.png'
         out.show()
 
 
@@ -64,7 +66,7 @@ class cardGenerator (unit):
     def debug(self):
         print(self.attackPower)
 
-testUnit = unit(20, 200, Image.open('icons\character.png'), 'Epic Gamer')
+testUnit = unit(20, 200000000, Image.open('icons\character03.png'), 'Epic Gamer')
 
 cardGen = cardGenerator()
-cardGen.createCard(testUnit)
+cardGen.createCard(testUnit, 0)

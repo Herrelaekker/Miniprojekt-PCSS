@@ -1,0 +1,3 @@
+20, 200, icons/character03.png, Wow Epic
+20, 100, icons/character01.png, Omega Epic
+200, 200, icons/character02.png, Wow Epic
