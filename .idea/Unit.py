@@ -8,6 +8,7 @@ class unit(object):
     cost = 10
     icon = cv.imread("Warrior.png")
     name = 'default name'
+    card = None
 
     def __init__(self, cost, attackPower, icon, name):
         self.cost = cost
@@ -29,3 +30,9 @@ class unit(object):
 
     def getName(self):
         return self.name
+
+    def getCard(self):
+        return self.card
+
+    def SetCard(self, card):
+        self.card = card

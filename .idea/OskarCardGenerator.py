@@ -40,11 +40,11 @@ class cardGenerator (unit):
         new_image.paste(image1, (0, 0))
         new_image.paste(image2, (image1_size[0], 0))
         new_image.paste(image3, (100, image2_size[0]))
-        new_image.save("cards\merged_image.png","PNG")
+        new_image.save("Image Examples\merged_image.png","PNG")
         #new_image.show()
 
         #Henter billedet der skal skrives på
-        base = Image.open("cards\merged_image.png").convert("RGBA")
+        base = Image.open("Image Examples\merged_image.png").convert("RGBA")
 
         #Laver et blankt text image med 0% opacity
         txt = Image.new("RGBA", base.size, (255, 255, 255, 0))
