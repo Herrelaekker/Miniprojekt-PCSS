@@ -10,11 +10,26 @@ class player(object):
 
     img = cv.imread("Warrior.png")
 
-    team = [unit(1,2,img), unit(2,1,img), unit(3,3,img), unit(2,1,img)]
+    cardGen = cardGenerator()
+    unitGen = unitGenerator()
+    unitGen.genUnits(cardGen,open('unitList.txt', 'r'))
+    unitList = unitGen.getUnits()
+
+    cards = [None]*0
+
+    team = [unit(1,2,img,""), unit(2,1,img,""), unit(3,3,img,""), unit(2,1,img,"")]
 
     def __init__(self, team):
+        print(":D ")
         self.team = team
 
+        f = 'cards'
+
+        for file in os.listdir(f):
+            f_img = f + "/" + file
+            tempImg = Image.open(f_img)
+            self.cards.append(tempImg)
+            
 
     def calcPower(self):
         self.totalPower = 0
@@ -27,9 +42,9 @@ class player(object):
         return self.totalPower
 
 
-# img=cv.imread("Warrior.png")
-# team=[unit(2,1,img),unit(3,2,img)]
+img=cv.imread("Warrior.png")
+team=[unit(2,1,img,""),unit(3,2,img,"")]
 
-# p1 = player(team)
+p1 = player(team)
 # p1.calcPower()
 # print(p1.getTotalPower())

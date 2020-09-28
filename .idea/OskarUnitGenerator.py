@@ -5,9 +5,13 @@ from OskarCardGenerator import cardGenerator
 class unitGenerator():
 
     unitList = open('unitList.txt', 'r')
+    units = [unit(1,1,'',"")]*0
 
     def __init__(self):
         self.unitList = open('unitList.txt', 'r')
+
+    def getUnits(self):
+        return self.units
 
     #Genererer units ved hjælp af et cardGenerator objekt og en unitList (en .txt-fil).
     def genUnits(self, cardGenerator, unitList):
@@ -17,4 +21,5 @@ class unitGenerator():
             fileNumber = x
             split = line.split(", ")
             newUnit = unit(split[0], split[1], Image.open(split[2]), split[3])
-            cardGen.createCard(newUnit, x)
+            self.units.append(newUnit)
+            cardGenerator.createCard(newUnit, x)

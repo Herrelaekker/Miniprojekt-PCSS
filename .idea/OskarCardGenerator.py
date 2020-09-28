@@ -66,7 +66,7 @@ class cardGenerator (unit):
         out = Image.alpha_composite(base, txt)
         out.save('cards/'+fileName, 'PNG')
         fileName = 'characterCard' + str(fileNumber) + '.png'
-        out.show()
+        # out.show()
 
 
 
