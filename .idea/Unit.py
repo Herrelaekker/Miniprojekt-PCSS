@@ -18,7 +18,7 @@ class unit(object):
 
 
     def getAttackPower(self):
-        return self.attackPower
+        return int(self.attackPower)
 
 
     def getCost(self):

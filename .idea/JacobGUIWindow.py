@@ -3,6 +3,7 @@ import tkinter as tk
 from PIL import ImageTk,Image
 import PIL
 from Unit import unit
+from PlayerOlga import *
 from random import randrange
 import cv2 as cv
 import numpy as np
@@ -22,7 +23,7 @@ class GUIWindow():
    # phImg2 = ImageTk.PhotoImage(img2)
 
     unitList = [unit(1, 1, "", "")] * 0  # Liste over units på venstre side
-    teamList = [unit(3, 3, "", "")] * 0  # Liste over units på højre side
+   # teamList = [unit(3, 3, "", "")] * 0  # Liste over units på højre side
 
     sortStr = ["Most Power", "Least Power", "Biggest Cost", "Smallest Cost"]
     curSortNum = len(sortStr) - 1  # Variabel der viser hvilken string vi er ved i sortStr-arrayet.
@@ -33,7 +34,7 @@ class GUIWindow():
     col2 = 1  # Kolonner i anden række (der skiller units og team)
     col3 = col1 + col2 + 1  # Kolonner i sidste antal felter (team listen)
 
-
+    p = None
     #btn_text = tk.StringVar()
 
     # Laver en masse billeder som grid
@@ -124,13 +125,14 @@ class GUIWindow():
         return HighestUnit
 
     def UpdateTeam(self):
+        team = self.p.getTeam()
         for x in range(self.row2):
             for y in range(self.col1):
                 newLabel = tk.Label(self.mainFrame,image=self.phImg)
                 newLabel.grid(row=x, column=y + self.col3)
 
-        for x, u in enumerate(self.teamList):
-            btnImg = self.getBtnImage(self.teamList,x)
+        for x, u in enumerate(team):
+            btnImg = self.getBtnImage(team,x)
 
             newButton = tk.Button(self.mainFrame,image=btnImg, command=lambda x=x: self.removeTeamUnit(x))
             newButton.image = btnImg
@@ -138,15 +140,16 @@ class GUIWindow():
             newButton.grid(row=num, column=x - (num * self.col1) + self.col3)
 
     def removeTeamUnit(self,indexNum):
-        self.teamList.remove(self.teamList[indexNum])
+        self.p.removeFromTeamList(indexNum)
         self.UpdateTeam()
 
     def unitToTeam(self, indexNum):
-        print(indexNum)
-        self.teamList.append(self.unitList[indexNum])
+        self.p.addToTeamList(self.unitList[indexNum])
         self.UpdateTeam()
 
-    def __init__(self, unitList, master):
+    def __init__(self, unitList, master, p):
+        self.p = p
+        print(self.p.getName())
         self.root = master
         self.mainFrame = tk.Frame(self.root)
 

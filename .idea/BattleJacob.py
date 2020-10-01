@@ -13,24 +13,35 @@ def calcBattle():
     p2Score = p2.getTotalPower()
 
     if (p1Score > p2Score):
-        print("P1 Wins!")
+        print(p1.getName() + " Wins!")
     else:
-        print("P2 Wins!")
+        print(p2.getName() + " Wins!")
 
-    print("\n P1 Score = " + str(p1Score) + "\n P2 Score = " + str(p2Score))
+    print("\n" + p1.getName() + " Score = " + str(p1Score) + "\n" + p2.getName() + " Score = " + str(p2Score))
 
 def new_window():
     newWindow = tk.Toplevel(root)
     app = player(newWindow)
 
+def printTeams():
+    p1.printTeam()
+    p2.printTeam()
+
 root = tk.Tk()
+root.withdraw()
 
 top1 = tk.Toplevel(root)
-p1 = player(top1)
-top2 =tk.Toplevel(root)
-p2 = player(top2)
+p1 = player(top1,"p1")
+top2 = tk.Toplevel(root)
+p2 = player(top2,"p2")
 
-btn = tk.Button(width=25,height=10,text='Compare', command=calcBattle)
+top3 = tk.Toplevel(root)
+frame = tk.Frame(top3)
+
+btn = tk.Button(frame,width=25,height=10,text='Compare', command=calcBattle)
 btn.pack()
+
+btn2 = tk.Button(frame,width=25,height=5,text='printTeams', command=printTeams)
+btn2.pack()
 
 root.mainloop()
