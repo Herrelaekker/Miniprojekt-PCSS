@@ -16,14 +16,11 @@ class GUIWindow():
     mainFrame = None
 
     img = Image.open("./UnitsJacob/Placeholder.png")
-    img = img.resize((100, 100))
+    img = img.resize((150, 150))
   #  phImg = ImageTk.PhotoImage(img)  # Photoimage er nødvendigt for at bruge det til knapper og labels
 
-    img2 = img.resize((25, 100))
+    img2 = img.resize((25, 120))
    # phImg2 = ImageTk.PhotoImage(img2)
-
-    unitList = [unit(1, 1, "", "")] * 0  # Liste over units på venstre side
-   # teamList = [unit(3, 3, "", "")] * 0  # Liste over units på højre side
 
     sortStr = ["Most Power", "Least Power", "Biggest Cost", "Smallest Cost"]
     curSortNum = len(sortStr) - 1  # Variabel der viser hvilken string vi er ved i sortStr-arrayet.
@@ -33,6 +30,8 @@ class GUIWindow():
     row2 = 2
     col2 = 1  # Kolonner i anden række (der skiller units og team)
     col3 = col1 + col2 + 1  # Kolonner i sidste antal felter (team listen)
+
+    #flag = 0
 
     p = None
     #btn_text = tk.StringVar()
@@ -76,21 +75,36 @@ class GUIWindow():
 
     def getBtnImage(self,list, val):
         newIcon = list[val].getCard()
-        newIcon = newIcon.resize((100,100))
+        newIcon = newIcon.resize((150, 150))
         newImg = ImageTk.PhotoImage(image=newIcon)
         return newImg
 
-    def SortUnits(self, list):
-        tempList = list
-        sortedList = [None] * 0
-        for x in range(len(list)):
-            HighestUnit = tempList[0]
-            HighestUnit = self.GetUnit(HighestUnit, list)
+    def UnitSwap(self, index):
+        tempVal = self.unitList[index]
+        self.unitList[index] = self.unitList[index+1]
+        self.unitList[index+1] = tempVal
+        self.flag += 1
 
-            sortedList.append(HighestUnit)
-            tempList.remove(HighestUnit)
+# CurSortNum = "Most Power", "Least Power", "Biggest Cost", "Smallest Cost"
+    def SortUnits(self):
 
-        self.unitList = sortedList
+        while True:
+            self.flag = 0
+            for x in range(len(self.unitList) - 1): #If only 1 -> ERROR
+                if self.curSortNum == 0:
+                    if self.unitList[x].getAttackPower() < self.unitList[x+1].getAttackPower():
+                        self.UnitSwap(x)
+                elif self.curSortNum == 1:
+                    if self.unitList[x].getAttackPower() > self.unitList[x+1].getAttackPower():
+                        self.UnitSwap(x)
+                elif self.curSortNum == 2:
+                    if self.unitList[x].getCost() < self.unitList[x+1].getCost():
+                        self.UnitSwap(x)
+                elif self.curSortNum == 3:
+                    if self.unitList[x].getCost() > self.unitList[x+1].getCost():
+                        self.UnitSwap(x)
+            if self.flag <= 0:
+                break
         self.ShowUnitList()
 
     def sortBtnClicked(self):
@@ -100,29 +114,27 @@ class GUIWindow():
             self.curSortNum = len(self.sortStr) - 1
         print(self.curSortNum)
         self.btn_text.set(self.sortStr[self.curSortNum])
-        self.SortUnits(self.unitList)
+        self.SortUnits()
 
-    def GetUnit(self, HighestUnit, list):
-        if (self.curSortNum == 0):
-            for u in list:
-                if u.getCost() > HighestUnit.getAttackPower():
-                    HighestUnit = u
-        elif (self.curSortNum == 1):
-            for u in list:
-                if u.getCost() < HighestUnit.getAttackPower():
-                    HighestUnit = u
-        elif (self.curSortNum == 2):
-            for u in list:
-                if u.getCost() > HighestUnit.getCost():
-                    HighestUnit = u
-        elif (self.curSortNum == 3):
-            for u in list:
-                if u.getCost() < HighestUnit.getCost():
-                    HighestUnit = u
-        else:
-            print("ERROR")
+    def Search(self):
 
-        return HighestUnit
+        for x in range(len(self.tempList)):
+            self.unitList.append(self.tempList[x])
+
+      #  print(str(len(self.unitListStart)) + " " + str(len(self.unitList)))
+        tempStr = self.searchBar.get()
+        self.tempList = []
+        print(tempStr)
+        for x in range(len(self.unitList)): # 0-2
+            if self.unitList[x].getName().count(tempStr) <= 0:
+                self.tempList.append(self.unitList[x])
+
+        for x in range(len(self.tempList)):
+            self.unitList.remove(self.tempList[x])
+
+        self.SortUnits()
+
+
 
     def UpdateTeam(self):
         team = self.p.getTeam()
@@ -158,7 +170,9 @@ class GUIWindow():
         self.btn_text = tk.StringVar()
 
         self.printGrid()
-        self.unitList = unitList
+        self.unitList = unitList.copy()
+        self.tempList = []
+        self.SortUnits()
         self.ShowUnitList()
 
         # Tekst
@@ -170,6 +184,12 @@ class GUIWindow():
 
         sortBtn = tk.Button(self.mainFrame,textvariable=self.btn_text, command=self.sortBtnClicked)
         sortBtn.grid(row=7, column=3)
+
+        self.searchBar = tk.Entry(self.mainFrame)
+        self.searchBar.grid(row=8, column=3)
+
+        self.searchBtn = tk.Button(self.mainFrame,text='Search', command=self.Search)
+        self.searchBtn.grid(row=8, column=4)
         self.mainFrame.pack()
 
     def getTeamList(self):

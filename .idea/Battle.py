@@ -32,16 +32,16 @@ root.withdraw()
 
 top1 = tk.Toplevel(root)
 p1 = player(top1,"p1")
-top2 = tk.Toplevel(root)
-p2 = player(top2,"p2")
+#top2 = tk.Toplevel(root)
+#p2 = player(top2,"p2")
 
-top3 = tk.Toplevel(root)
-frame = tk.Frame(top3)
+#top3 = tk.Toplevel(root)
+#frame = tk.Frame(top3)
 
-btn = tk.Button(frame,width=25,height=10,text='Compare', command=calcBattle)
-btn.pack()
+#btn = tk.Button(frame,width=25,height=10,text='Compare', command=calcBattle)
+#btn.pack()
 
-btn2 = tk.Button(frame,width=25,height=5,text='printTeams', command=printTeams)
-btn2.pack()
+#btn2 = tk.Button(frame,width=25,height=5,text='printTeams', command=printTeams)
+#'btn2.pack()
 
 root.mainloop()
