@@ -5,7 +5,7 @@ import tkinter as tk
 from tkinter import *
 from PIL import ImageTk,Image
 import numpy as np
-from JacobGUIWindow import GUIWindow
+from GUIWindow import GUIWindow
 from PIL import Image
 from OskarUnitGenerator import unitGenerator
 from OskarCardGenerator import cardGenerator
