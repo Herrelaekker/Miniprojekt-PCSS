@@ -1,6 +1,6 @@
-20, 200, icons/character03.png, test gamer
+20, 10, icons/character03.png, test gamer
 20, 100, icons/character01.png, test gamer2
-200, 200, icons/character02.png, average gamer
+200, 22, icons/character02.png, average gamer
 100, 250, icons/character04.png, young gamer
 200, 300, icons/character05.png, sweaty gamer
 500, 700, icons/character06.png, punished gamer

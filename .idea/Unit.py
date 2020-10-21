@@ -22,7 +22,7 @@ class unit(object):
 
 
     def getCost(self):
-        return self.cost
+        return int(self.cost)
 
 
     def getIcon(self):
