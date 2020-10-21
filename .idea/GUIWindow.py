@@ -118,6 +118,9 @@ class GUIWindow():
         self.btn_text.set(self.sortStr[self.curSortNum])
         self.SortUnits()
 
+
+    # Vi fjerner de irrelevante units, og gemmer dem i tempList
+    # Når vi Searcher igen tilføjer vi i starten tempList, så udgangspunktet er i den fulde liste.
     def Search(self):
 
         for x in range(len(self.tempList)):
