@@ -3,7 +3,7 @@ import tkinter as tk
 from PIL import ImageTk, Image
 import PIL
 from Unit import unit
-from PlayerOlga import *
+from Player import *
 from random import randrange
 import cv2 as cv
 import numpy as np

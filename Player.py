@@ -7,8 +7,8 @@ from PIL import ImageTk,Image
 import numpy as np
 from GUIWindow import GUIWindow
 from PIL import Image
-from OskarUnitGenerator import unitGenerator
-from OskarCardGenerator import cardGenerator
+from UnitGenerator import unitGenerator
+from CardGenerator import cardGenerator
 class player(object):
     """
         player

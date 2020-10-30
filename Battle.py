@@ -1,7 +1,7 @@
 import cv2 as cv
 from Unit import unit
 import tkinter as tk
-from PlayerOlga import player
+from Player import player
 
 img = cv.imread("Warrior.png")
 

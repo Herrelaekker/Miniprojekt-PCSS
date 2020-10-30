@@ -1,10 +1,10 @@
 from PIL import Image
 #Read the two images
-image1 = Image.open('Warrior.png')
+image1 = Image.open('../Warrior.png')
 # image1.show()
-image2 = Image.open('Warrior.png')
+image2 = Image.open('../Warrior.png')
 
-image3 = Image.open('Warrior.png')
+image3 = Image.open('../Warrior.png')
 # image2.show()
 #resize, first image
 image1 = image1.resize((100, 500))

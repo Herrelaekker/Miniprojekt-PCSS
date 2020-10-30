@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
 from Unit import unit
-from OskarCardGenerator import cardGenerator
+from CardGenerator import cardGenerator
 
 class unitGenerator():
 
