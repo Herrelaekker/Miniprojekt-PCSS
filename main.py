@@ -1,16 +1,18 @@
-# This is a sample Python script.
+import tkinter as tk
+from Player import player
+from Client import Client
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+root = tk.Tk()
+#root.withdraw()
 
+def func():
+    client.func()
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hej {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+client = Client()
+newButton = tk.Button(root,text='Im Done', width= 25, command=func)
+newButton.pack()
 
+top1 = tk.Toplevel(root)
+player = player(top1, "p1")
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('Venner')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+root.mainloop()

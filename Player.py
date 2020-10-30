@@ -9,6 +9,8 @@ from GUIWindow import GUIWindow
 from PIL import Image
 from UnitGenerator import unitGenerator
 from CardGenerator import cardGenerator
+from Client import Client
+
 class player(object):
     """
         player
@@ -21,6 +23,7 @@ class player(object):
     unitGen = unitGenerator()
     unitGen.genUnits(cardGen,open('unitList.txt', 'r'))
     unitList = unitGen.getUnits()
+   # playerClient = Client()
 
     window = None
    #  window2 = None
