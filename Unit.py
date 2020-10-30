@@ -6,7 +6,7 @@ class unit(object):
 
     attackPower = 238
     cost = 10
-    icon = cv.imread("Warrior.png")
+    icon = cv.imread("testmappe/Warrior.png")
     name = 'default name'
     card = None
 

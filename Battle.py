@@ -3,10 +3,6 @@ from Unit import unit
 import tkinter as tk
 from Player import player
 
-img = cv.imread("Warrior.png")
-
-
-
 def calcBattle():
 
     p1Score = p1.getTotalPower()

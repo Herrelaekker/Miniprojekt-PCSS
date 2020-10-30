@@ -11,7 +11,7 @@ img = Image.open("UnitsJacob/Placeholder.png")
 img = img.resize((100,100))
 phImg = ImageTk.PhotoImage(img) # Photoimage er nødvnedigt for at bruge det til knapper og labels
 
-images = [Image.open("../Warrior.png"), Image.open("UnitsJacob/Ninja.png"), Image.open("UnitsJacob/Chad.png")]
+images = [Image.open("Warrior.png"), Image.open("UnitsJacob/Ninja.png"), Image.open("UnitsJacob/Chad.png")]
 
 img2 = img.resize((25,100))
 my_img2 = ImageTk.PhotoImage(img2)

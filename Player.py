@@ -17,8 +17,6 @@ class player(object):
     totalPower = 0
     money = 10
 
-    img = cv.imread("Warrior.png")
-
     cardGen = cardGenerator()
     unitGen = unitGenerator()
     unitGen.genUnits(cardGen,open('unitList.txt', 'r'))
