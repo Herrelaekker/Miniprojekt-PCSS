@@ -8,7 +8,7 @@ from random import randrange
 import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
-
+from BubbleSort import BubbleSort
 
 class GUIWindow():
     # root = Tk()
@@ -34,6 +34,7 @@ class GUIWindow():
     # flag = 0
 
     p = None
+
 
     # btn_text = tk.StringVar()
 
@@ -89,24 +90,7 @@ class GUIWindow():
     # CurSortNum = "Most Power", "Least Power", "Biggest Cost", "Smallest Cost"
     # BubbleSort
     def SortUnits(self):
-
-        while True:
-            self.flag = 0
-            for x in range(len(self.unitList) - 1):  # If only 1 -> ERROR
-                if self.curSortNum == 0:
-                    if self.unitList[x].getAttackPower() < self.unitList[x + 1].getAttackPower():
-                        self.UnitSwap(x)
-                elif self.curSortNum == 1:
-                    if self.unitList[x].getAttackPower() > self.unitList[x + 1].getAttackPower():
-                        self.UnitSwap(x)
-                elif self.curSortNum == 2:
-                    if self.unitList[x].getCost() < self.unitList[x + 1].getCost():
-                        self.UnitSwap(x)
-                elif self.curSortNum == 3:
-                    if self.unitList[x].getCost() > self.unitList[x + 1].getCost():
-                        self.UnitSwap(x)
-            if self.flag <= 0:
-                break
+        self.unitList = self.bSort.SortUnits(self.curSortNum, self.unitList).copy()
         self.ShowUnitList()
 
     def sortBtnClicked(self):
@@ -175,6 +159,7 @@ class GUIWindow():
         self.printGrid()
         self.unitList = unitList.copy()
         self.tempList = []
+        self.bSort = BubbleSort(unitList.copy())
         self.SortUnits()
         self.ShowUnitList()
 
