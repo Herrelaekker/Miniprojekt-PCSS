@@ -15,7 +15,7 @@ class GUIWindow():
     # root.withdraw()
     mainFrame = None
 
-    img = Image.open("./UnitsJacob/Placeholder.png")
+    img = Image.open("testmappe/UnitsJacob/Placeholder.png")
     img = img.resize((150, 150))
     #  phImg = ImageTk.PhotoImage(img)  # Photoimage er nødvendigt for at bruge det til knapper og labels
 
