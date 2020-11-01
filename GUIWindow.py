@@ -153,6 +153,7 @@ class GUIWindow():
     def getIfDone(self):
         return self.done
 
+
     def __init__(self, unitList, master, p):
         self.done = False
         self.p = p

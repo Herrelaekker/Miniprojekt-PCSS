@@ -1,6 +1,7 @@
 import tkinter as tk
 from Player import player
 from Client import Client
+from Unit import unit
 import threading
 
 root = tk.Tk()
@@ -10,17 +11,10 @@ pNum = ""
 client = Client(pNum)
 client.start()
 
-while pNum == "":
-    pNum = client.getName()
-
-
-def sendMessage(msg):
+def sendDoneMessage(list):
     rMsg = ""
-    client = Client(pNum)
-    client.start()
-    client.setMsg(msg)
-    while rMsg == "":
-        rMsg = client.getName()
+    client.setTeam(list)
+    client.setMsg("Done")
 
 
 def checkIfDone():
@@ -28,7 +22,9 @@ def checkIfDone():
     while curDone is False:
         curDone = player.getCurDone()
         if curDone is not False:
-            sendMessage("Done")
+            teamList = player.getTeam()
+            sendDoneMessage(teamList)
+            break
 
 
 #newButton = tk.Button(root, text="I'm Done", width=25, command=lambda x="Done": sendMessage(x))

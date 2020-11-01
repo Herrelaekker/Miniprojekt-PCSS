@@ -70,7 +70,6 @@ class player(object):
 
     def getCurDone(self):
         return self.window.getIfDone()
-        print(self.window.getIfDone())
 
 
 #root.withdraw()
