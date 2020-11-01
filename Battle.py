@@ -2,7 +2,6 @@ import cv2 as cv
 from Unit import unit
 import tkinter as tk
 from Player import player
-def printTeams():
 from UnitGenerator import unitGenerator
 from CardGenerator import cardGenerator
 class Battle(object):
