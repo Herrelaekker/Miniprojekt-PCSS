@@ -4,7 +4,7 @@ from Client import Client
 import threading
 
 root = tk.Tk()
-root.withdraw()
+#root.withdraw()
 
 pNum = ""
 client = Client(pNum)
@@ -31,11 +31,11 @@ def checkIfDone():
             sendMessage("Done")
 
 
-newButton = tk.Button(root, text="I'm Done", width=25, command=lambda x="Done": sendMessage(x))
-newButton.pack()
+#newButton = tk.Button(root, text="I'm Done", width=25, command=lambda x="Done": sendMessage(x))
+#newButton.pack()
 
-top1 = tk.Toplevel(root)
-player = player(top1)
+#top1 = tk.Toplevel(root)
+player = player(root)
 
 threadDone = threading.Thread(target=checkIfDone)
 threadDone.start()

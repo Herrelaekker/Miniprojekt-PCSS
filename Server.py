@@ -11,6 +11,7 @@ print("Socket successfully created")
 port = 9879
 hostname = socket.gethostname()
 ip_address = socket.gethostbyname(socket.gethostname())
+print("ip adress ="+socket.gethostbyname(socket.gethostname()))
 
 s.bind((ip_address, port))
 print(f"socket bound to {port}")
@@ -38,26 +39,27 @@ def addActivePlayer(num):
 
 
 def NewClientSocketHandler(client, addr):
-
-    print("[Connection established]")
     #print("P" + str(playersActive) + f" has connected from {addr}")
-
    # try:
     while True:
         try:
             msg = client.recv(256).decode()
             if msg == "Give me my player number":
                 addActivePlayer(1)
+                print(f"[Connection from player {playersActive} established]")
                 pNum = client.send(bytes(str(playersActive), "utf-8"))
             if msg == "Done":
                 pNum = client.recv(256).decode()
+                print(f"[Connection from player {pNum} established]")
                 print("player" + pNum + " done")
                 print(int(pNum))
                 func(int(pNum))
         except:
             break
-    print(f"The client from ip: {addr}, and port: {port}, has gracefully diconnected!")
+    print(f"Player {pNum}, has gracefully disconnected!")
     addActivePlayer(-1)
+    print("active players left: " + str(playersActive))
+
     client.close()
 
 
@@ -67,9 +69,9 @@ while True:
     # print(f"Got connection from {addr}")
     # c.send(bytes("Thank you for connecting", "utf-8"))
 
-    if playersActive < 2:
-        conn.send(bytes("Thank you for connecting", "utf-8"))
-        thread = threading.Thread(target=NewClientSocketHandler, args=(conn, addr))
-        thread.start()
-    else:
-        conn.send(bytes("Failed to connect.", "utf-8"))
+  #  if playersActive < 2:
+    conn.send(bytes("Thank you for connecting", "utf-8"))
+    thread = threading.Thread(target=NewClientSocketHandler, args=(conn, addr))
+    thread.start()
+  #  else:
+   #     conn.send(bytes("Failed to connect.", "utf-8"))
