@@ -146,9 +146,16 @@ class GUIWindow():
         self.p.addToTeamList(self.unitList[indexNum])
         self.UpdateTeam()
 
+    def doneBtnClicked(self):
+        self.done = True
+        print("doneBtnClicked")
+
+    def getIfDone(self):
+        return self.done
+
     def __init__(self, unitList, master, p):
+        self.done = False
         self.p = p
-        print(self.p.getName())
         self.root = master
         self.mainFrame = tk.Frame(self.root)
 
@@ -172,6 +179,9 @@ class GUIWindow():
 
         sortBtn = tk.Button(self.mainFrame, textvariable=self.btn_text, command=self.sortBtnClicked)
         sortBtn.grid(row=7, column=3)
+
+        doneBtn = tk.Button(self.mainFrame, text="Done!", command=self.doneBtnClicked, font=24)
+        doneBtn.grid(row=4, column=9)
 
         self.searchBar = tk.Entry(self.mainFrame)
         self.searchBar.grid(row=8, column=3)

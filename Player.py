@@ -30,9 +30,7 @@ class player(object):
 
     team = [None]*0
 
-    name = ""
-
-    def __init__(self, master, name):
+    def __init__(self, master):
         print(":D ")
 
         f = 'cards'
@@ -43,20 +41,11 @@ class player(object):
             tempImg = Image.open(f_img)
 
             self.unitList[x].SetCard(tempImg)
-        self.name = name
         #print(self.name)
 
         self.window = GUIWindow(self.unitList, master, self)
         #newWindow = tk.Toplevel(master)
         #self.window2 = GUIWindow(self.unitList, newWindow)
-
-    def printTeam(self):
-        print("added to" + self.name)
-        for x in range(len(self.team)):
-            print(self.team[x].getName())
-
-    def getName(self):
-        return self.name
 
     def getTeam(self):
         return self.team
@@ -78,6 +67,11 @@ class player(object):
     def getTotalPower(self):
         self.calcPower()
         return self.totalPower
+
+    def getCurDone(self):
+        return self.window.getIfDone()
+        print(self.window.getIfDone())
+
 
 #root.withdraw()
 
