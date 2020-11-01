@@ -2,42 +2,39 @@ import cv2 as cv
 from Unit import unit
 import tkinter as tk
 from Player import player
-
-def calcBattle():
-
-    p1Score = p1.getTotalPower()
-    p2Score = p2.getTotalPower()
-
-    if (p1Score > p2Score):
-        print(p1.getName() + " Wins!")
-    else:
-        print(p2.getName() + " Wins!")
-
-    print("\n" + p1.getName() + " Score = " + str(p1Score) + "\n" + p2.getName() + " Score = " + str(p2Score))
-
-def new_window():
-    newWindow = tk.Toplevel(root)
-    app = player(newWindow)
-
 def printTeams():
-    p1.printTeam()
-    p2.printTeam()
+from UnitGenerator import unitGenerator
+from CardGenerator import cardGenerator
+class Battle(object):
 
-root = tk.Tk()
-root.withdraw()
+    def __init__(self):
+        self.cardGen = cardGenerator()
+        self.unitGen = unitGenerator()
+        self.unitGen.genUnits(self.cardGen, open('unitList.txt', 'r'))
+        self.unitList = self.unitGen.getUnits()
 
-top1 = tk.Toplevel(root)
-p1 = player(top1,"p1")
-#top2 = tk.Toplevel(root)
-#p2 = player(top2,"p2")
+    def calcBattle(self, playersTeams):
+        self.getPlayerTeam(playersTeams)
+        finalScore1 = 0
+        finalScore2 = 0
 
-#top3 = tk.Toplevel(root)
-#frame = tk.Frame(top3)
+        for x in range(2):
+            for y in range(len(self.playersTeams[x])):
+                print(self.playersTeams[x][y].getAttackPower())
+                if x == 0:
+                    finalScore1 += self.playersTeams[x][y].getAttackPower()
+                if x== 1:
+                    finalScore2 += self.playersTeams[x][y].getAttackPower()
 
-#btn = tk.Button(frame,width=25,height=10,text='Compare', command=calcBattle)
-#btn.pack()
+        return (finalScore1, finalScore2)
 
-#btn2 = tk.Button(frame,width=25,height=5,text='printTeams', command=printTeams)
-#'btn2.pack()
 
-root.mainloop()
+    def getPlayerTeam(self, playersTeams):
+        self.playersTeams = playersTeams
+        for x in range(2):
+            for y in range(len(playersTeams[x])):
+                for z in range(len(self.unitList)):
+                    if playersTeams[x][y] == self.unitList[z].getName():
+                        self.playersTeams[x][y] = self.unitList[z]
+                        break
+        self.playersTeams

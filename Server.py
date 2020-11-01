@@ -2,9 +2,12 @@ import time
 import socket
 import threading
 import pickle
+from Battle import Battle
 from socket import error as SocketError
 import errno
 #import Client
+
+battle = Battle()
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print("Socket successfully created")
@@ -25,7 +28,7 @@ playersActive = 0
 playersReady = [False, False]
 playersOccupied = [False, False]
 allPlayersReady = False
-playerTeams = []
+playerTeams = [None]*2
 
 playersActive = 0
 
@@ -89,13 +92,38 @@ def NewClientSocketHandler(client, addr):
                 list = pickle.loads(teamMsg)
                 print("<list loaded>")
                 print(f"Player {pNum}'s list: {list}")
-                playerTeams[pNum] = list
+                playerTeams[pNum-1] = list
 
                 client.send(bytes("Thanks for the list!", "utf-8"))
                 playerDone(int(pNum))
+
             if AllPlayersDone():
                 print("All Players Done")
-        except:
+                print(f"player 1's list: {playerTeams[0]}")
+                print(f"player 2's list: {playerTeams[1]}")
+
+                newMsg = pickle.dumps(playerTeams[0])
+                client.send(newMsg)
+                newMsg = pickle.dumps(playerTeams[1])
+                client.send(newMsg)
+
+                finalScores = battle.calcBattle(playerTeams)
+                print(finalScores)
+                newMsg = pickle.dumps(finalScores)
+                client.send(newMsg)
+
+                if finalScores[0] > finalScores[1]:
+                    print("Player 1 won!")
+                    client.send(bytes("Player 1 won!", "utf-8"))
+                elif finalScores[1] > finalScores[0]:
+                    print("Player 2 won!")
+                    client.send(bytes("Player 2 won!", "utf-8"))
+                else:
+                    print("It's a Tie!")
+                    client.send(bytes("It's a Tie!", "utf-8"))
+
+
+        except ConnectionResetError:
             break
     print(f"Player {pNum}, has disconnected!")
     addActivePlayer(-1)

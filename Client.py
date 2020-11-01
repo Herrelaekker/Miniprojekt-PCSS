@@ -28,7 +28,10 @@ class Client(threading.Thread):
         self.msg = msg
 
     def setTeam(self, team):
-        self.team = team
+        self.team = [None]*len(team)
+        for x in range(len(team)):
+            self.team[x] = team[x].getName()
+        #self.team = team
 
     def getMsg(self):
         return self.msg
@@ -40,6 +43,7 @@ class Client(threading.Thread):
         newMsg = pickle.dumps(d)
         self.s.send(bytes("Done", "utf-8"))
         self.s.send(newMsg)
+
         print("The message from server: " + self.s.recv(1024).decode("utf-8"))
         print("Done")
 
@@ -50,12 +54,26 @@ class Client(threading.Thread):
                 self.pNum = self.s.recv(256).decode()
                 print(self.pNum)
             elif self.msg == "Done":
-                d = {1: "Hej", 2: "Venner"}
-                newMsg = pickle.dumps(d)
+                newMsg = pickle.dumps(self.team)
                 self.s.send(bytes("Done", "utf-8"))
                 self.s.send(newMsg)
                 print("The message from server: " + self.s.recv(1024).decode("utf-8"))
                 print("Done")
+                list1 = self.s.recv(10000)
+                list2 = self.s.recv(10000)
+                print("list received")
+                self.playerTeam1 = pickle.loads(list1)
+                self.playerTeam2 = pickle.loads(list2)
+                print(f"player 1's list: {self.playerTeam1}")
+                print(f"player 2's list: {self.playerTeam2}")
+
+                scores = self.s.recv(1024)
+                self.finalScores = pickle.loads(scores)
+                print(f"player 1's score: {self.finalScores[0]}")
+                print(f"player 2's score: {self.finalScores[1]}")
+
+                finalMsg = self.s.recv(1024).decode()
+                print(finalMsg)
+
                 self.msg = ""
-             #   print(self.s.recv(1024).decode())
 
