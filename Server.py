@@ -44,7 +44,7 @@ def addActivePlayer(num):
 
 
 def AllPlayersDone():
-    if playersReady[0] is True & playersReady[1] is True:
+    if playersReady[0] is True and playersReady[1] is True:
         return True
     else:
         return False
@@ -97,6 +97,7 @@ def NewClientSocketHandler(client, addr):
                 client.send(bytes("Thanks for the list!", "utf-8"))
                 playerDone(int(pNum))
 
+            print(AllPlayersDone())
             if AllPlayersDone():
                 print("All Players Done")
                 print(f"player 1's list: {playerTeams[0]}")
@@ -113,15 +114,13 @@ def NewClientSocketHandler(client, addr):
                 client.send(newMsg)
 
                 if finalScores[0] > finalScores[1]:
-                    print("Player 1 won!")
-                    client.send(bytes("Player 1 won!", "utf-8"))
+                    finalMsg = "Player 1 won!"
                 elif finalScores[1] > finalScores[0]:
-                    print("Player 2 won!")
-                    client.send(bytes("Player 2 won!", "utf-8"))
+                    finalMsg = "Player 2 won!"
                 else:
-                    print("It's a Tie!")
-                    client.send(bytes("It's a Tie!", "utf-8"))
-
+                    finalMsg = "It's a Tie!"
+                client.send(bytes(finalMsg, "utf-8"))
+                print(finalMsg)
 
         except ConnectionResetError:
             break
@@ -134,14 +133,21 @@ def NewClientSocketHandler(client, addr):
     client.close()
 
 
+counter = 0
 while True:
     conn, addr = s.accept()
     # print(f"Got connection from {addr}")
     # c.send(bytes("Thank you for connecting", "utf-8"))
-
-  #  if playersActive < 2:
     conn.send(bytes("Thank you for connecting", "utf-8"))
-    thread = threading.Thread(target=NewClientSocketHandler, args=(conn, addr))
-    thread.start()
+  #  if playersActive < 2:
+    if counter == 0:
+        thread1 = threading.Thread(target=NewClientSocketHandler, args=(conn, addr))
+        thread1.start()
+        counter += 1
+    elif counter == 1:
+        thread2 = threading.Thread(target=NewClientSocketHandler, args=(conn, addr))
+        thread2.start()
+        counter += 1
   #  else:
    #     conn.send(bytes("Failed to connect.", "utf-8"))
+

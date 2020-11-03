@@ -19,7 +19,6 @@ class Battle(object):
 
         for x in range(2):
             for y in range(len(self.playersTeams[x])):
-                print(self.playersTeams[x][y].getAttackPower())
                 if x == 0:
                     finalScore1 += self.playersTeams[x][y].getAttackPower()
                 if x== 1:
