@@ -17,7 +17,7 @@ class player(object):
     """
 
     totalPower = 0
-    money = 10
+    money = 1000
 
     cardGen = cardGenerator()
     unitGen = unitGenerator()
@@ -49,6 +49,12 @@ class player(object):
 
     def getTeam(self):
         return self.team
+
+    def getMoney(self):
+        return self.money
+
+    def addMoney(self, val):
+        self.money += val
 
     def addToTeamList(self, u):
         self.team.append(u)

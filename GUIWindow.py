@@ -139,12 +139,21 @@ class GUIWindow():
             newButton.grid(row=num, column=x - (num * self.col1) + self.col3)
 
     def removeTeamUnit(self, indexNum):
+        moneyAdded = self.p.getTeam()[indexNum].getCost()
+        self.p.addMoney(moneyAdded)
+        self.money += moneyAdded
+        self.money_text.set("Money: " + str(self.money))
         self.p.removeFromTeamList(indexNum)
         self.UpdateTeam()
 
     def unitToTeam(self, indexNum):
-        self.p.addToTeamList(self.unitList[indexNum])
-        self.UpdateTeam()
+        moneySubtracted = self.unitList[indexNum].getCost()
+        if moneySubtracted <= self.money and len(self.p.getTeam()) < 10:
+            self.p.addMoney(-moneySubtracted)
+            self.money -= moneySubtracted
+            self.money_text.set("Money: " + str(self.money))
+            self.p.addToTeamList(self.unitList[indexNum])
+            self.UpdateTeam()
 
     def doneBtnClicked(self):
         self.done = True
@@ -157,6 +166,7 @@ class GUIWindow():
     def __init__(self, unitList, master, p):
         self.done = False
         self.p = p
+        self.money = p.getMoney()
         self.root = master
         self.mainFrame = tk.Frame(self.root)
 
@@ -181,6 +191,12 @@ class GUIWindow():
         sortBtn = tk.Button(self.mainFrame, textvariable=self.btn_text, command=self.sortBtnClicked)
         sortBtn.grid(row=7, column=3)
 
+        self.money_text = tk.StringVar()
+        self.money_text.set("Money: " + str(self.money))
+
+        moneyLabel = tk.Label(self.mainFrame, textvariable=self.money_text)
+        moneyLabel.grid(row=6, column=2)
+
         doneBtn = tk.Button(self.mainFrame, text="Done!", command=self.doneBtnClicked, font=24)
         doneBtn.grid(row=4, column=9)
 
@@ -190,6 +206,7 @@ class GUIWindow():
         self.searchBtn = tk.Button(self.mainFrame, text='Search', command=self.Search)
         self.searchBtn.grid(row=8, column=4)
         self.mainFrame.pack()
+
 
     def getTeamList(self):
         return self.teamList
