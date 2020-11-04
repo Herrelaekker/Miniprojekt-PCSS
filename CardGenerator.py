@@ -60,7 +60,7 @@ class cardGenerator (unit):
         #Draw'er cost tekst på billedet
         d.text((30, 420), str(unit.getCost()), font=fnt, fill=(0, 0, 0, 255))
 
-        d.text((300, 420), unit.getName(), font=fnt, fill=(0, 0, 0, 255))
+        d.text((150, 420), unit.getName(), font=fnt, fill=(0, 0, 0, 255))
 
         #Gemmer outputtet som en png
         out = Image.alpha_composite(base, txt)

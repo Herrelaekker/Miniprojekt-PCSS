@@ -1,7 +1,25 @@
-20, 10, icons/character03.png, test gamer
-20, 100, icons/character01.png, test gamer2
-200, 22, icons/character02.png, average gamer
+20, 10, icons/character01.png, cursed gamer
+20, 100, icons/character02.png, nose god gamer
+200, 22, icons/character03.png, average gamer
 100, 250, icons/character04.png, young gamer
 200, 300, icons/character05.png, sweaty gamer
 500, 700, icons/character06.png, punished gamer
 100, 100, icons/character07.png, still'a gamer
+70, 230, icons/character08.png, sexy gamer
+100, 330, icons/character09.png, cowboy gamer
+90, 270, icons/character10.png, nordic gamer
+10, 10, icons/character11.png, colonial gamer
+10, 15, icons/character12.png, revolutionary gamer
+70, 70, icons/character13.png, french gamer
+700, 150000, icons/character14.png, mysterious gamer
+80, 100, icons/character15.png, cute school gamer
+190, 120, icons/character16.png, construction gamer
+120, 140, icons/character17.png, one-eyed gamer
+150, 1920, icons/character18.png, dragonborn gamer
+120, 140, icons/character19.png, high society gamer
+520, 15903840, icons/character20.png, society gamer
+60, 2077, icons/character21.png, delayed gamer
+1, 1, icons/character22.png, special gamer
+69, 69, icons/character23.png, (<-- nice)true gamer
+50, 120, icons/character24.png, orange gamer
+60, 130, icons/character25.png, socially distant gamer
