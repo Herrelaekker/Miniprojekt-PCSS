@@ -30,7 +30,7 @@ class player(object):
 
     team = [None]*0
 
-    def __init__(self, master):
+    def __init__(self, master, main):
         print(":D ")
 
         f = 'cards'
@@ -43,9 +43,14 @@ class player(object):
             self.unitList[x].SetCard(tempImg)
         #print(self.name)
 
+        self.main = main
+
         self.window = GUIWindow(self.unitList, master, self)
         #newWindow = tk.Toplevel(master)
         #self.window2 = GUIWindow(self.unitList, newWindow)
+
+    def getMain(self):
+        return self.main
 
     def getTeam(self):
         return self.team

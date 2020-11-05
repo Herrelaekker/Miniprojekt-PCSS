@@ -1,5 +1,6 @@
 from tkinter import *
 import tkinter as tk
+import tkinter.font as tkFont
 from PIL import ImageTk, Image
 import PIL
 from Unit import unit
@@ -35,7 +36,6 @@ class GUIWindow():
 
     p = None
 
-
     # btn_text = tk.StringVar()
 
     # Laver en masse billeder som grid
@@ -65,7 +65,7 @@ class GUIWindow():
                 newLabel = tk.Label(self.mainFrame, image=self.phImg)
                 newLabel.grid(row=x, column=y + 1)
         for x, u in enumerate(self.unitList):
-            btnImg = self.getBtnImage(self.unitList, x)
+            btnImg = self.getBtnImage(self.unitList, x, (150, 150))
 
             # cv.imshow('g',btnImg)
 
@@ -75,9 +75,9 @@ class GUIWindow():
             newButton.grid(row=num, column=x - (num * self.col1) + 1)
         self.mainFrame.pack()
 
-    def getBtnImage(self, list, val):
+    def getBtnImage(self, list, val, size):
         newIcon = list[val].getCard()
-        newIcon = newIcon.resize((150, 150))
+        newIcon = newIcon.resize(size)
         newImg = ImageTk.PhotoImage(image=newIcon)
         return newImg
 
@@ -131,7 +131,7 @@ class GUIWindow():
                 newLabel.grid(row=x, column=y + self.col3)
 
         for x, u in enumerate(team):
-            btnImg = self.getBtnImage(team, x)
+            btnImg = self.getBtnImage(team, x, (150, 150))
 
             newButton = tk.Button(self.mainFrame, image=btnImg, command=lambda x=x: self.removeTeamUnit(x))
             newButton.image = btnImg
@@ -156,8 +156,30 @@ class GUIWindow():
             self.UpdateTeam()
 
     def doneBtnClicked(self):
-        self.done = True
-        print("doneBtnClicked")
+        main = self.p.getMain()
+        main.doneButtonClicked()
+
+        for x in range(len(self.p.getTeam())):
+            labelImg = self.getBtnImage(self.p.getTeam(), x, (50, 50))
+            num = int(x / self.col1)
+            newLabel = tk.Label(self.otherWindow, image=labelImg)
+            newLabel.image = labelImg
+            #newLabel.grid(row=num, column=x - (num * self.col1) + 1)
+
+            num = int(x / self.col1)
+            #newLabel.place(x=(x*50-5*50*num),y=(num*50))
+            newLabel.grid(row= 2+num, column=x - (num * self.col1) + 1)
+           # canvas.create_image(x*50, num*50,anchor=NW,image=img)
+
+        fontStyle = tkFont.Font(family="Lucida Grande", size=24)
+
+        Player1Label = tk.Label(self.otherWindow, text="Your Team: ", font=fontStyle)
+        Player1Label.grid(row=1, column=2)
+        self.otherWindow.deiconify()
+
+        #self.done = True
+        #print("doneBtnClicked")
+
 
     def getIfDone(self):
         return self.done
@@ -169,6 +191,8 @@ class GUIWindow():
         self.money = p.getMoney()
         self.root = master
         self.mainFrame = tk.Frame(self.root)
+        self.otherWindow = tk.Toplevel(self.root)
+        self.otherWindow.withdraw()
 
         self.phImg = ImageTk.PhotoImage(self.img)
         self.phImg2 = ImageTk.PhotoImage(self.img2)
