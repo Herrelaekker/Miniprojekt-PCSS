@@ -3,6 +3,10 @@ from Unit import unit
 
 class cardGenerator (unit):
     statsBar = Image.open('icons\statsBar.png')
+    statsBar0 = Image.open('icons\statsBar0.png')
+    statsBar1 = Image.open('icons\statsBar1.png')
+    statsBar2 = Image.open('icons\statsBar2.png')
+    statsBar3 = Image.open('icons\statsBar3.png')
     nameBar = Image.open('icons\mameBar.png')
     icon = Image.open('icons\character.png')
     attackPower = 10
@@ -11,6 +15,10 @@ class cardGenerator (unit):
     #Ved ikke hvor meget af det her, der var nødvendigt. Hvis man ved, om  det kan fjernes er man meget velkommen til det
     def __init__(self):
         self.statsBar = Image.open('icons\statsBar.png')
+        self.statsBar0 = Image.open('icons\statsBar0.png')
+        self.statsBar1 = Image.open('icons\statsBar1.png')
+        self.statsBar2 = Image.open('icons\statsBar2.png')
+        self.statsBar3 = Image.open('icons\statsBar3.png')
         self.nameBar = Image.open('icons\mameBar.png')
         self.icon = Image.open('icons\character.png')
         self.attackPower = 10
@@ -25,7 +33,14 @@ class cardGenerator (unit):
 
         #Resizer alle billederne til de korrekte størrelser. Burde ikke være nødvendigt, men er en failsafe>
         #>for at sikre, at output-billederne forbliver 500x500
-        image1 = self.statsBar.resize((100, 500))
+        if unit.getRole() == 0:
+            image1 = self.statsBar0.resize((100, 500))
+        elif unit.getRole() == 1:
+            image1 = self.statsBar1.resize((100, 500))
+        elif unit.getRole() == 2:
+            image1 = self.statsBar2.resize((100, 500))
+        elif unit.getRole() == 3:
+            image1 = self.statsBar3.resize((100, 500))
         image2 = self.icon.resize((400, 400))
         image3 = self.nameBar.resize((400, 100))
 
@@ -57,10 +72,10 @@ class cardGenerator (unit):
         #Draw'er attackpower tekst på billedet
         d.text((30, 110), str(unit.getAttackPower()), font=fnt, fill=(0, 0, 0, 255))
 
-        #Draw'er cost tekst på billedet
-        d.text((30, 420), str(unit.getCost()), font=fnt, fill=(0, 0, 0, 255))
+        #Draw'er cost- og name tekst på billedet
+        d.text((30, 430), str(unit.getCost()), font=fnt, fill=(0, 0, 0, 255))
 
-        d.text((150, 420), unit.getName(), font=fnt, fill=(0, 0, 0, 255))
+        d.text((150, 430), unit.getName(), font=fnt, fill=(0, 0, 0, 255))
 
         #Gemmer outputtet som en png
         out = Image.alpha_composite(base, txt)

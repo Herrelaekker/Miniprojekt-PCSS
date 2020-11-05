@@ -5,7 +5,7 @@ from CardGenerator import cardGenerator
 class unitGenerator():
 
     unitList = open('unitList.txt', 'r')
-    units = [unit(1,1,'',"")]*0
+    units = [unit(1,1,'',"",0)]*0
 
     def __init__(self):
         self.unitList = open('unitList.txt', 'r')
@@ -20,6 +20,6 @@ class unitGenerator():
         for x, line in enumerate(unitList, 1):
             fileNumber = x
             split = line.split(", ")
-            newUnit = unit(split[0], split[1], Image.open(split[2]), split[3])
+            newUnit = unit(split[0], split[1], Image.open(split[2]), split[3], split[4])
             self.units.append(newUnit)
             cardGenerator.createCard(newUnit, x)
