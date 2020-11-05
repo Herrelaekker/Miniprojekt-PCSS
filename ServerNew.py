@@ -68,10 +68,17 @@ def accepting_connections():
 
             print("Connection has been established :" + address[0])
 
-            thread = threading.Thread(target=lambda y=playersConnected, x=conn: listen(x,y))
-            threads.append(thread)
-            thread.daemon = True
-            thread.start()
+            print(playersConnected)
+            if playersConnected == 0:
+                thread = threading.Thread(target=lambda y=playersConnected, x=conn: listen(x,y))
+                threads.append(thread)
+                thread.daemon = True
+                thread.start()
+            elif playersConnected == 1:
+                thread1 = threading.Thread(target=lambda y=playersConnected, x=conn: listen(x,y))
+                threads.append(thread1)
+                thread1.daemon = True
+                thread1.start()
 
             playersConnected = len(all_connections)
 
@@ -175,25 +182,28 @@ def create_workers():
 
 
 def listen(conn, num):
-   # global playersReady
-       # if playersReady[num] is False:
-    data = conn.recv(1024).decode()
-    if data == "Done":
-        msg = conn.recv(10000)
-        playerTeams.append(pickle.loads(msg))
-        print(pickle.loads(msg))
-       # playersReady += 1
-        usedConnections.append(conn)
-        playersReady[num] = True
-        checkIfAllPlayersDone(conn)
+    while True:
+        data = conn.recv(1024).decode()
+        if data == "Done":
+            msg = conn.recv(10000)
+            playerTeams.append(pickle.loads(msg))
+            print(pickle.loads(msg))
+           # playersReady += 1
+            usedConnections.append(conn)
+            playersReady[num] = True
+            break
+    while True:
+        if playersReady[0] and playersReady[1]:
+            print("player "+ str(conn) + "stopped listening")
+            AllPlayersDone(conn)
+            break
 
-def checkIfAllPlayersDone(conn):
+def AllPlayersDone(conn):
     print(playersReady)
-    if playersReady[0] and playersReady[1]:
-        msg0 = pickle.dumps(playerTeams[0])
-        msg1 = pickle.dumps(playerTeams[1])
-        conn.send(msg0)
-        conn.send(msg1)
+    msg0 = pickle.dumps(playerTeams[0])
+    msg1 = pickle.dumps(playerTeams[1])
+    conn.send(msg0)
+    conn.send(msg1)
 
 # Do next job that is in the queue (handle connections, send commands)
 def work():
