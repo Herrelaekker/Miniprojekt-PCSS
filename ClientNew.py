@@ -32,6 +32,11 @@ class Client(threading.Thread):
 
     def listen(self):
         while True:
+            msg = self.s.recv(10000)
+            list = pickle.loads(msg)
+            print(list)
+
+            """
             print("listening...")
             # global playersReady
             # if playersReady[num] is False:
@@ -45,7 +50,7 @@ class Client(threading.Thread):
             print(self.list1)
             print(self.totalPower)
             print("Player 1:" + str(self.totalPower[0]))
-            print("Player 2:" + str(self.totalPower[1]))
+            print("Player 2:" + str(self.totalPower[1]))"""
 
 
     def sendMessage(self, msg, power):

@@ -211,17 +211,15 @@ def AllPlayersDone(conn):
     print(playerTeams)
     playerPower = calcBattle(playerTeams)
 
-    print(playerTeams)
-
     team = setTeam(playerTeams)
     team0 = pickle.dumps(team[0])
     team1 = pickle.dumps(team[1])
+    totalPower = pickle.dumps(playerPower)
+    print(totalPower)
     conn.send(team0)
     conn.send(team1)
-    print(playerPower)
-
-    totalPower = pickle.dumps(playerPower)
     conn.send(totalPower)
+    print(playerPower)
 
 
 def calcBattle(playersTeams):
