@@ -18,8 +18,11 @@ class main(object):
     def doneButtonClicked(self):
         totalPower = self.player.getTotalPower()
         print(totalPower)
-        self.client.setTeam(self.player.getTeam())
+        self.client.setTeamToNames(self.player.getTeam())
         self.client.sendMessage("Done", totalPower)
+
+    def getPlayer(self):
+        return self.player
 
     #newButton = tk.Button(root, text="I'm Done", width=25, command=lambda x="Done": sendMessage(x))
     #newButton.pack()

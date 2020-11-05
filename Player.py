@@ -81,6 +81,12 @@ class player(object):
     def getCurDone(self):
         return self.window.getIfDone()
 
+    def getGUIWindow(self):
+        return self.window
+
+    def getUnitList(self):
+        return self.unitList
+
 
 #root.withdraw()
 

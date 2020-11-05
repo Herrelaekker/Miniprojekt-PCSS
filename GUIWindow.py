@@ -159,30 +159,39 @@ class GUIWindow():
         main = self.p.getMain()
         main.doneButtonClicked()
 
-        for x in range(len(self.p.getTeam())):
-            labelImg = self.getBtnImage(self.p.getTeam(), x, (50, 50))
-            num = int(x / self.col1)
-            newLabel = tk.Label(self.otherWindow, image=labelImg)
-            newLabel.image = labelImg
-            #newLabel.grid(row=num, column=x - (num * self.col1) + 1)
+        fontStyle = tkFont.Font(family="Lucida Grande", size=48)
+        self.waitingLabel = tk.Label(self.otherWindow, text="Waiting for other player...", font=fontStyle)
+        self.waitingLabel.grid(row=1, column=2)
 
-            num = int(x / self.col1)
-            #newLabel.place(x=(x*50-5*50*num),y=(num*50))
-            newLabel.grid(row= 2+num, column=x - (num * self.col1) + 1)
-           # canvas.create_image(x*50, num*50,anchor=NW,image=img)
-
-        fontStyle = tkFont.Font(family="Lucida Grande", size=24)
-
-        Player1Label = tk.Label(self.otherWindow, text="Your Team: ", font=fontStyle)
-        Player1Label.grid(row=1, column=2)
         self.otherWindow.deiconify()
 
         #self.done = True
         #print("doneBtnClicked")
 
 
-    def getIfDone(self):
-        return self.done
+    def SetBattleWindow(self, playerTeams, playerScores):
+        self.waitingLabel.destroy()
+
+        for y in range(2):
+            for x in range(len(playerTeams[y])):
+                labelImg = self.getBtnImage(playerTeams[y], x, (50, 50))
+                num = int(x / self.col1)
+                newLabel = tk.Label(self.otherWindow, image=labelImg)
+                newLabel.image = labelImg
+                # newLabel.grid(row=num, column=x - (num * self.col1) + 1)
+
+                num = int(x / self.col1)
+                # newLabel.place(x=(x*50-5*50*num),y=(num*50))
+                newLabel.grid(row=2 + num, column=y*5 + x - (num * self.col1) + 1)
+                # canvas.create_image(x*50, num*50,anchor=NW,image=img)
+
+        fontStyle = tkFont.Font(family="Lucida Grande", size=24)
+
+        Player1Label = tk.Label(self.otherWindow, text="Your Team: ", font=fontStyle)
+        Player1Label.grid(row=1, column=2)
+        Player2Label = tk.Label(self.otherWindow, text="Opp. Team: ", font=fontStyle)
+        Player2Label.grid(row=1, column=7)
+     #   self.otherWindow.deiconify()
 
 
     def __init__(self, unitList, master, p):
@@ -232,5 +241,3 @@ class GUIWindow():
         self.mainFrame.pack()
 
 
-    def getTeamList(self):
-        return self.teamList
