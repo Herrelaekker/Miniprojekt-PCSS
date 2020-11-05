@@ -21,7 +21,7 @@ class cardGenerator (unit):
         self.icon = unit.getIcon()
         self.attackPower = unit.getAttackPower()
         self.name = unit.getName()
-        fileName = 'characterCard'+str(fileNumber)+'.png'
+        fileName = 'characterCard' + str(fileNumber).zfill(2) + '.png'
 
         #Resizer alle billederne til de korrekte størrelser. Burde ikke være nødvendigt, men er en failsafe>
         #>for at sikre, at output-billederne forbliver 500x500
@@ -60,12 +60,11 @@ class cardGenerator (unit):
         #Draw'er cost tekst på billedet
         d.text((30, 420), str(unit.getCost()), font=fnt, fill=(0, 0, 0, 255))
 
-        d.text((300, 420), unit.getName(), font=fnt, fill=(0, 0, 0, 255))
+        d.text((150, 420), unit.getName(), font=fnt, fill=(0, 0, 0, 255))
 
         #Gemmer outputtet som en png
         out = Image.alpha_composite(base, txt)
         out.save('cards/'+fileName, 'PNG')
-        fileName = 'characterCard' + str(fileNumber) + '.png'
         # out.show()
 
 
