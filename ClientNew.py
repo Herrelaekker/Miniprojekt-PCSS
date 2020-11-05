@@ -32,20 +32,26 @@ class Client(threading.Thread):
 
     def listen(self):
         while True:
-            print(":)")
+            print("listening...")
             # global playersReady
             # if playersReady[num] is False:
-            self.msg0 = self.s.recv(10000)
-            self.msg1 = self.s.recv(10000)
-            self.list0 = pickle.loads(self.msg0)
-            self.list1 = pickle.loads(self.msg1)
+            msg0 = self.s.recv(10000)
+            msg1 = self.s.recv(10000)
+            msgPower = self.s.recv(10000)
+            self.list0 = pickle.loads(msg0)
+            self.list1 = pickle.loads(msg1)
+            self.totalPower = pickle.loads(msgPower)
             print(self.list0)
             print(self.list1)
+            print(self.totalPower)
+            print("Player 1:" + str(self.totalPower[0]))
+            print("Player 2:" + str(self.totalPower[1]))
 
-    def sendMessage(self, msg):
+
+    def sendMessage(self, msg, power):
         try:
-            self.s.send(bytes(msg, "utf-8"))
             newMsg = pickle.dumps(self.team)
+            self.s.send(bytes(msg, "utf-8"))
             self.s.send(newMsg)
         except:
             print("Error sending commands")

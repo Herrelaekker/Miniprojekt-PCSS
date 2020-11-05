@@ -3,7 +3,10 @@ import sys
 import threading
 import time
 import pickle
+from Battle import Battle
 from queue import Queue
+from CardGenerator import cardGenerator
+from UnitGenerator import unitGenerator
 
 NUMBER_OF_THREADS = 2 ## Ikke clients
 JOB_NUMBER = [1, 2] ## Ikke CLients
@@ -15,6 +18,12 @@ playersReady = [False, False]
 usedConnections = []
 playersConnected = 0
 playerTeams = []
+playerPower = []
+
+cardGen = cardGenerator()
+unitGen = unitGenerator()
+unitGen.genUnits(cardGen, open('unitList.txt', 'r'))
+unitList = unitGen.getUnits()
 
 # Create a Socket ( connect two computers)
 def create_socket():
@@ -176,7 +185,6 @@ def send_target_commands(conn, msg):
 def create_workers():
     for _ in range(NUMBER_OF_THREADS):
         t = threading.Thread(target=work)
-
         t.daemon = True
         t.start()
 
@@ -185,25 +193,68 @@ def listen(conn, num):
     while True:
         data = conn.recv(1024).decode()
         if data == "Done":
-            msg = conn.recv(10000)
-            playerTeams.append(pickle.loads(msg))
-            print(pickle.loads(msg))
+            list = conn.recv(100000)
+            playerTeams.append(pickle.loads(list))
+            print(pickle.loads(list))
            # playersReady += 1
             usedConnections.append(conn)
             playersReady[num] = True
             break
     while True:
         if playersReady[0] and playersReady[1]:
-            print("player "+ str(conn) + "stopped listening")
+            print("player " + str(conn) + "stopped listening")
             AllPlayersDone(conn)
             break
 
 def AllPlayersDone(conn):
     print(playersReady)
-    msg0 = pickle.dumps(playerTeams[0])
-    msg1 = pickle.dumps(playerTeams[1])
-    conn.send(msg0)
-    conn.send(msg1)
+    print(playerTeams)
+    playerPower = calcBattle(playerTeams)
+
+    print(playerTeams)
+
+    team = setTeam(playerTeams)
+    team0 = pickle.dumps(team[0])
+    team1 = pickle.dumps(team[1])
+    conn.send(team0)
+    conn.send(team1)
+    print(playerPower)
+
+    totalPower = pickle.dumps(playerPower)
+    conn.send(totalPower)
+
+
+def calcBattle(playersTeams):
+        newPT = getPlayerTeam(playersTeams)
+        finalScore = [0, 0]
+
+        for x in range(2):
+            for y in range(len(newPT[x])):
+                if x == 0:
+                    finalScore[0] += newPT[x][y].getAttackPower()
+                if x == 1:
+                    finalScore[1] += newPT[x][y].getAttackPower()
+
+        return finalScore
+
+
+def setTeam(team):
+    for x in range(2):
+        for y in range(len(team[x])):
+            team[x][y] = team[x][y].getName()
+    return team
+
+
+def getPlayerTeam(playersTeams):
+    newPT = playersTeams.copy()
+    for x in range(2):
+        for y in range(len(newPT[x])):
+            for z in range(len(unitList)):
+                if newPT[x][y] == unitList[z].getName():
+                    newPT[x][y] = unitList[z]
+                    break
+    return newPT
+
 
 # Do next job that is in the queue (handle connections, send commands)
 def work():

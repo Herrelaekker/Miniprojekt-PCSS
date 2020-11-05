@@ -2,6 +2,7 @@ import cv2 as cv
 from Unit import unit
 import tkinter as tk
 from Player import player
+from PIL import Image
 from UnitGenerator import unitGenerator
 from CardGenerator import cardGenerator
 class Battle(object):
@@ -14,17 +15,17 @@ class Battle(object):
 
     def calcBattle(self, playersTeams):
         self.getPlayerTeam(playersTeams)
-        finalScore1 = 0
+        finalScore = [0,0]
         finalScore2 = 0
 
         for x in range(2):
             for y in range(len(self.playersTeams[x])):
                 if x == 0:
-                    finalScore1 += self.playersTeams[x][y].getAttackPower()
+                    finalScore[0] += self.playersTeams[x][y].getAttackPower()
                 if x== 1:
-                    finalScore2 += self.playersTeams[x][y].getAttackPower()
+                    finalScore[1] += self.playersTeams[x][y].getAttackPower()
 
-        return (finalScore1, finalScore2)
+        return finalScore
 
 
     def getPlayerTeam(self, playersTeams):
@@ -35,4 +36,3 @@ class Battle(object):
                     if playersTeams[x][y] == self.unitList[z].getName():
                         self.playersTeams[x][y] = self.unitList[z]
                         break
-        self.playersTeams

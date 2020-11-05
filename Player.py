@@ -73,7 +73,6 @@ class player(object):
         #self.team = self.window.getTeamList()
         for x in range(len(self.team)):
             self.totalPower += self.team[x].getAttackPower()
-            print(self.team[x].getAttackPower())
 
     def getTotalPower(self):
         self.calcPower()
