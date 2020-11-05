@@ -18,7 +18,6 @@ playersReady = [False, False]
 usedConnections = []
 playersConnected = 0
 playerTeams = []
-playerPower = []
 
 cardGen = cardGenerator()
 unitGen = unitGenerator()
@@ -207,19 +206,24 @@ def listen(conn, num):
             break
 
 def AllPlayersDone(conn):
-    print(playersReady)
-    print(playerTeams)
-    playerPower = calcBattle(playerTeams)
+    try:
+        print(playersReady)
+        print(playerTeams)
+        playerPower = calcBattle(playerTeams)
 
-    team = setTeam(playerTeams)
-    team0 = pickle.dumps(team[0])
-    team1 = pickle.dumps(team[1])
-    totalPower = pickle.dumps(playerPower)
-    print(totalPower)
-    conn.send(team0)
-    conn.send(team1)
-    conn.send(totalPower)
-    print(playerPower)
+        team = setTeam(playerTeams)
+        team0 = pickle.dumps(team[0])
+        team1 = pickle.dumps(team[1])
+        totalPower = pickle.dumps(playerPower)
+        totalPower2 = pickle.dumps(playerPower[1])
+        print(totalPower)
+        conn.send(team0)
+        conn.send(team1)
+        time.sleep(2)
+        conn.send(totalPower)
+        print(playerPower)
+    except:
+        print("Error")
 
 
 def calcBattle(playersTeams):
