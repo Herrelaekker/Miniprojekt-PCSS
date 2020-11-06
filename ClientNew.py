@@ -77,7 +77,8 @@ class Client(threading.Thread):
             p = self.main.getPlayer()
             window = p.getGUIWindow()
             self.setNamesToTeam()
-            window.SetBattleWindow(self.playerTeams, self.playerScores)
+
+            window.SetBattleWindow(self.playerTeams, self.playerScores[0], self.playerScores[1])
 
 
 

@@ -44,26 +44,26 @@ class GUIWindow():
         for x in range(self.row1):
             for y in range(self.col1):
                 newLabel = tk.Label(self.mainFrame, image=self.phImg)
-                newLabel.grid(row=x, column=y + 1)
+                newLabel.grid(row=x, column=y + 1,padx=5, pady=5)
 
         # Grid der skiller de 2 grids
         for x in range(self.row1):
             for y in range(self.col2):
                 newLabel = tk.Label(self.mainFrame, image=self.phImg2)
-                newLabel.grid(row=x, column=y + self.col1 + 1)
+                newLabel.grid(row=x, column=y + self.col1 + 1,padx=5, pady=5)
 
         # Andet Grid
         for x in range(self.row2):
             for y in range(self.col1):
                 newLabel = tk.Label(self.mainFrame, image=self.phImg)
-                newLabel.grid(row=x, column=y + self.col3)
+                newLabel.grid(row=x, column=y + self.col3,padx=5, pady=5)
 
     def ShowUnitList(self):
         # Første grid
         for x in range(self.row1):
             for y in range(self.col1):
                 newLabel = tk.Label(self.mainFrame, image=self.phImg)
-                newLabel.grid(row=x, column=y + 1)
+                newLabel.grid(row=x, column=y + 1,padx=5, pady=5)
         for x, u in enumerate(self.unitList):
             btnImg = self.getBtnImage(self.unitList, x, (150, 150))
 
@@ -72,7 +72,7 @@ class GUIWindow():
             newButton = tk.Button(self.mainFrame, image=btnImg, command=lambda x=x: self.unitToTeam(x))
             newButton.image = btnImg
             num = int(x / self.col1)
-            newButton.grid(row=num, column=x - (num * self.col1) + 1)
+            newButton.grid(row=num, column=x - (num * self.col1) + 1,padx=5, pady=5)
         self.mainFrame.pack()
 
     def getBtnImage(self, list, val, size):
@@ -128,7 +128,7 @@ class GUIWindow():
         for x in range(self.row2):
             for y in range(self.col1):
                 newLabel = tk.Label(self.mainFrame, image=self.phImg)
-                newLabel.grid(row=x, column=y + self.col3)
+                newLabel.grid(row=x, column=y + self.col3,padx=5, pady=5)
 
         for x, u in enumerate(team):
             btnImg = self.getBtnImage(team, x, (150, 150))
@@ -136,7 +136,7 @@ class GUIWindow():
             newButton = tk.Button(self.mainFrame, image=btnImg, command=lambda x=x: self.removeTeamUnit(x))
             newButton.image = btnImg
             num = int(x / self.col1)
-            newButton.grid(row=num, column=x - (num * self.col1) + self.col3)
+            newButton.grid(row=num, column=x - (num * self.col1) + self.col3,padx=5, pady=5)
 
     def removeTeamUnit(self, indexNum):
         moneyAdded = self.p.getTeam()[indexNum].getCost()
@@ -165,16 +165,22 @@ class GUIWindow():
 
         self.otherWindow.deiconify()
 
-        #self.done = True
-        #print("doneBtnClicked")
+        """team = self.p.getTeam()
+        newArray = []
+        for x in range(2):
+            newArray.append(team)
+        print(newArray)
+        score1 = 376
+        score2 = 543
+        self.SetBattleWindow(newArray, score1, score2)"""
 
 
-    def SetBattleWindow(self, playerTeams, playerScores):
+    def SetBattleWindow(self, playerTeams, playerScore1, playerScore2):
         self.waitingLabel.destroy()
 
         for y in range(2):
             for x in range(len(playerTeams[y])):
-                labelImg = self.getBtnImage(playerTeams[y], x, (50, 50))
+                labelImg = self.getBtnImage(playerTeams[y], x, (150, 150))
                 num = int(x / self.col1)
                 newLabel = tk.Label(self.otherWindow, image=labelImg)
                 newLabel.image = labelImg
@@ -182,15 +188,24 @@ class GUIWindow():
 
                 num = int(x / self.col1)
                 # newLabel.place(x=(x*50-5*50*num),y=(num*50))
-                newLabel.grid(row=2 + num, column=y*5 + x - (num * self.col1) + 1)
+                if y == 1 and num == 0:
+                    newLabel.grid(row=2 + num + y * 2, column=x - (num * self.col1) + 2, padx=5, pady=20)
+                else:
+                    newLabel.grid(row=2 + num + y*2, column=x - (num * self.col1) + 2,padx=5, pady=5)
                 # canvas.create_image(x*50, num*50,anchor=NW,image=img)
 
         fontStyle = tkFont.Font(family="Lucida Grande", size=24)
 
-        Player1Label = tk.Label(self.otherWindow, text="Your Team: ", font=fontStyle)
-        Player1Label.grid(row=1, column=2)
-        Player2Label = tk.Label(self.otherWindow, text="Opp. Team: ", font=fontStyle)
-        Player2Label.grid(row=1, column=7)
+        Player1Label = tk.Label(self.otherWindow, text="Player 1", font=fontStyle)
+        Player1Label.grid(row=2, column=1)
+        Player2Label = tk.Label(self.otherWindow, text="Player 2", font=fontStyle)
+        Player2Label.grid(row=4, column=1)
+
+        pScore1Lbl = tk.Label(self.otherWindow, text="Power: " + str(playerScore1), font=fontStyle)
+        pScore1Lbl.grid(row=2, column=8)
+        pScore2Lbl = tk.Label(self.otherWindow, text="Power: " + str(playerScore2), font=fontStyle)
+        pScore2Lbl.grid(row=4, column=8)
+
      #   self.otherWindow.deiconify()
 
 
