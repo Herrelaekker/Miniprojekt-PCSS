@@ -26,7 +26,7 @@ class GUIWindow():
     sortStr = ["Most Power", "Least Power", "Biggest Cost", "Smallest Cost"]
     curSortNum = len(sortStr) - 1  # Variabel der viser hvilken string vi er ved i sortStr-arrayet.
 
-    row1 = 5  # Rækker af felter der skal laves
+    row1 = 8  # Rækker af felter der skal laves
     col1 = 5  # Kolonner i første antal felter (Unit Listen)
     row2 = 2
     col2 = 1  # Kolonner i anden række (der skiller units og team)
@@ -40,36 +40,67 @@ class GUIWindow():
 
     # Laver en masse billeder som grid
     def printGrid(self):
+        self.frame_canvas = tk.Frame(self.mainFrame)
+        self.frame_canvas.grid(row=0, column=1, pady=(5, 0), sticky='nw')
+        self.frame_canvas.grid_rowconfigure(0, weight=1)
+        self.frame_canvas.grid_columnconfigure(0, weight=1)
+        self.frame_canvas.grid_propagate(False)
+
+        self.canvas = tk.Canvas(self.frame_canvas)
+        self.canvas.grid(row=0, column=0, sticky="news")
+
+        self.vsb = tk.Scrollbar(self.frame_canvas, orient="vertical", command=self.canvas.yview)
+        self.vsb.grid(row=0, column=1, sticky="ns")
+        self.canvas.configure(yscrollcommand=self.vsb.set)
+        self.frame_canvas.bind("<Configure>", self._on_frame_configure)
+
+        self.frame_buttons = tk.Frame(self.canvas)
+        self.canvas.create_window((0, 0), window=self.frame_buttons, anchor="nw")
+
+      #  self.button_frame = tk.Frame(self.unitListCanvas)
+     #   self.button_frame.grid(row=0, column=1, sticky='ns', padx=30)
+
+      #  self.scrollBar = tk.Scrollbar(self.unitListCanvas, orient="vertical", command=self.unitListCanvas.yview)
+      #  self.scrollBar.grid(row=0, column=10, sticky='ns')
         # Første grid
         for x in range(self.row1):
             for y in range(self.col1):
-                newLabel = tk.Label(self.mainFrame, image=self.phImg)
-                newLabel.grid(row=x, column=y + 1,padx=5, pady=5)
+                newLabel = tk.Label(self.frame_buttons, image=self.phImg)
+                newLabel.grid(row=x, column=y + 1,padx=5, pady=5, sticky="news")
 
-        # Grid der skiller de 2 grids
+        self.frame_canvas.config(width=850, height=900)
+
+        self.canvas.config(scrollregion=self.frame_canvas.bbox("all"))
+        self.canvas.config(scrollregion=self.canvas.bbox("all"))
+        """ # Grid der skiller de 2 grids
         for x in range(self.row1):
             for y in range(self.col2):
                 newLabel = tk.Label(self.mainFrame, image=self.phImg2)
-                newLabel.grid(row=x, column=y + self.col1 + 1,padx=5, pady=5)
+                newLabel.grid(row=x, column=y + self.col1 + 1,padx=5, pady=5, sticky='news')"""
 
+        self.teamListFrame = Frame(self.mainFrame)
+        self.teamListFrame.grid(row=0, column=2, sticky='ns')
         # Andet Grid
         for x in range(self.row2):
             for y in range(self.col1):
-                newLabel = tk.Label(self.mainFrame, image=self.phImg)
-                newLabel.grid(row=x, column=y + self.col3,padx=5, pady=5)
+                newLabel = tk.Label(self.teamListFrame, image=self.phImg)
+                newLabel.grid(row=x, column=y + self.col3,padx=5, pady=5, sticky='news')
+
+    def _on_frame_configure(self, event=None):
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
     def ShowUnitList(self):
         # Første grid
         for x in range(self.row1):
             for y in range(self.col1):
-                newLabel = tk.Label(self.mainFrame, image=self.phImg)
-                newLabel.grid(row=x, column=y + 1,padx=5, pady=5)
+                newLabel = tk.Label(self.frame_buttons, image=self.phImg)
+                newLabel.grid(row=x, column=y + 1, padx=5, pady=5)
         for x, u in enumerate(self.unitList):
             btnImg = self.getBtnImage(self.unitList, x, (150, 150))
 
             # cv.imshow('g',btnImg)
 
-            newButton = tk.Button(self.mainFrame, image=btnImg, command=lambda x=x: self.unitToTeam(x))
+            newButton = tk.Button(self.frame_buttons, image=btnImg, command=lambda x=x: self.unitToTeam(x))
             newButton.image = btnImg
             num = int(x / self.col1)
             newButton.grid(row=num, column=x - (num * self.col1) + 1,padx=5, pady=5)
@@ -127,13 +158,13 @@ class GUIWindow():
         team = self.p.getTeam()
         for x in range(self.row2):
             for y in range(self.col1):
-                newLabel = tk.Label(self.mainFrame, image=self.phImg)
+                newLabel = tk.Label(self.teamListFrame, image=self.phImg)
                 newLabel.grid(row=x, column=y + self.col3,padx=5, pady=5)
 
         for x, u in enumerate(team):
             btnImg = self.getBtnImage(team, x, (150, 150))
 
-            newButton = tk.Button(self.mainFrame, image=btnImg, command=lambda x=x: self.removeTeamUnit(x))
+            newButton = tk.Button(self.teamListFrame, image=btnImg, command=lambda x=x: self.removeTeamUnit(x))
             newButton.image = btnImg
             num = int(x / self.col1)
             newButton.grid(row=num, column=x - (num * self.col1) + self.col3,padx=5, pady=5)
@@ -221,6 +252,8 @@ class GUIWindow():
         self.phImg = ImageTk.PhotoImage(self.img)
         self.phImg2 = ImageTk.PhotoImage(self.img2)
         self.btn_text = tk.StringVar()
+       # self.canvas = tk.Canvas(self.mainFrame, bg="yellow")
+        #self.canvas.create_window((0, 0), window=self.button_frame, anchor='nw')
 
         self.printGrid()
         self.unitList = unitList.copy()
