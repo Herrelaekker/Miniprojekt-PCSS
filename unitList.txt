@@ -23,3 +23,10 @@
 69, 69, icons/character23.png, (<-- nice)true gamer, 3
 50, 120, icons/character24.png, orange gamer, 1
 60, 130, icons/character25.png, socially distant gamer, 3
+12, 12, icons/character26.png, abstract gamer, 2
+555, 555, icons/character27.png, gamer giovanna, 0
+1, 2, icons/character28.png, hillbilly gamer, 3
+200, 600, icons/character29.png, villain gamer, 1
+12, 34, icons/character30.png, gamer hacker, 2
+16, 1867, icons/character31.png, samurai gamer, 0
+111, 111, icons/character32.png, tall gamer, 1
