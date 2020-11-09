@@ -1,153 +1,160 @@
-import time
 import socket
 import threading
+import time
 import pickle
-from Battle import Battle
-from socket import error as SocketError
-import errno
-#import Client
+from CardGenerator import cardGenerator
+from UnitGenerator import unitGenerator
 
-battle = Battle()
+all_connections = []
+all_address = []
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-print("Socket successfully created")
-
-port = 9879
-hostname = socket.gethostname()
-ip_address = socket.gethostbyname(socket.gethostname())
-print("ip address = "+socket.gethostbyname(socket.gethostname()))
-
-s.bind((ip_address, port))
-print(f"socket bound to {port}")
-
-s.listen(5)
-print("socket is listening...")
-
-activeClients = []
-playersActive = 0
 playersReady = [False, False]
-playersOccupied = [False, False]
-allPlayersReady = False
-playerTeams = [None]*2
+usedConnections = []
+playersConnected = 0
+playerTeams = []
 
-playersActive = 0
+cardGen = cardGenerator()
+unitGen = unitGenerator()
+unitGen.genUnits(cardGen, open('unitList.txt', 'r'))
+unitList = unitGen.getUnits()
 
-def playerDone(num):
-    if playersReady[num-1] != True:
-        playersReady[num-1] = True
-        print(str(playersReady[0]) + str(playersReady[1]))
+# Create a Socket ( connect two computers)
+def create_socket():
+    try:
+        global host
+        global port
+        global s
+        host = ""
+        port = 9999
+        s = socket.socket()
 
-
-def addActivePlayer(num):
-    global playersActive
-    playersActive += num
-
-
-def AllPlayersDone():
-    if playersReady[0] is True and playersReady[1] is True:
-        return True
-    else:
-        return False
-
-
-def choosePlayerNumber():
-    global players
-    chosenpNum = 0
-    print("def choosePlayerNumber():")
-    for x in range(2):
-        if playersOccupied[x] is False:
-            print(x)
-            playersOccupied[x] = True
-            chosenpNum = x+1
-            break
-
-    return chosenpNum
+    except socket.error as msg:
+        print("Socket creation error: " + str(msg))
 
 
-def NewClientSocketHandler(client, addr):
-    #print("P" + str(playersActive) + f" has connected from {addr}")
-   # try
-    pNum = 0
+# Binding the socket and listening for connections
+def bind_socket():
+    try:
+        print("Binding the Port: " + str(port))
+
+        s.bind((host, port))
+        s.listen(5)
+
+    except socket.error as msg:
+        print("Socket Binding error" + str(msg) + "\n" + "Retrying...")
+        bind_socket()
+
+
+# Handling connection from multiple clients and saving to a list
+# Closing previous connections when server.py file is restarted
+numOfClients = 0
+threads =[]
+def accepting_connections():
+
     while True:
         try:
-            msg = client.recv(256).decode()
-            print("Connected...")
-            print("Message from client: " + msg)
-            if msg == "Give me my player number":
-                addActivePlayer(1)
-                print("active players: " + str(playersActive))
-                pNum = choosePlayerNumber()
-                print("Chosen number = " + str(pNum))
-                if pNum != 0:
-                    print(f"[Connection from player {pNum} established]")
-                    client.send(bytes(str(pNum), "utf-8"))
-                    msg = ""
-                else:
-                    print("Too many players :(")
-                    break
-            if msg == "Done":
-                print("Player" + str(pNum) + " done")
-                teamMsg = client.recv(256)
-                print("team Message Received")
-                list = pickle.loads(teamMsg)
-                print("<list loaded>")
-                print(f"Player {pNum}'s list: {list}")
-                playerTeams[pNum-1] = list
+            conn, address = s.accept()
+       #     s.setblocking(1)  # prevents timeout
 
-                client.send(bytes("Thanks for the list!", "utf-8"))
-                playerDone(int(pNum))
+            all_connections.append(conn)
+            all_address.append(address)
 
-            print(AllPlayersDone())
-            if AllPlayersDone():
-                print("All Players Done")
-                print(f"player 1's list: {playerTeams[0]}")
-                print(f"player 2's list: {playerTeams[1]}")
+            print("Connection has been established :" + address[0])
 
-                newMsg = pickle.dumps(playerTeams[0])
-                client.send(newMsg)
-                newMsg = pickle.dumps(playerTeams[1])
-                client.send(newMsg)
+            print(playersConnected)
+            if playersConnected == 0:
+                thread = threading.Thread(target=lambda y=playersConnected, x=conn: listen(x,y))
+                threads.append(thread)
+                thread.daemon = True
+                thread.start()
+            elif playersConnected == 1:
+                thread1 = threading.Thread(target=lambda y=playersConnected, x=conn: listen(x,y))
+                threads.append(thread1)
+                thread1.daemon = True
+                thread1.start()
 
-                finalScores = battle.calcBattle(playerTeams)
-                print(finalScores)
-                newMsg = pickle.dumps(finalScores)
-                client.send(newMsg)
+            playersConnected = len(all_connections)
 
-                if finalScores[0] > finalScores[1]:
-                    finalMsg = "Player 1 won!"
-                elif finalScores[1] > finalScores[0]:
-                    finalMsg = "Player 2 won!"
-                else:
-                    finalMsg = "It's a Tie!"
-                client.send(bytes(finalMsg, "utf-8"))
-                print(finalMsg)
+        except:
+            print("Error accepting connections")
 
-        except ConnectionResetError:
+
+
+def listen(conn, num):
+    while True:
+        data = conn.recv(1024).decode()
+        if data == "Done":
+            list = conn.recv(100000)
+            playerTeams.append(pickle.loads(list))
+            print(pickle.loads(list))
+           # playersReady += 1
+            usedConnections.append(conn)
+            playersReady[num] = True
             break
-    print(f"Player {pNum}, has disconnected!")
-    addActivePlayer(-1)
-    if playersReady[pNum-1] is False:
-        playersOccupied[pNum-1] = False
-    print("active players left: " + str(playersActive))
+    while True:
+        if playersReady[0] and playersReady[1]:
+            print("player " + str(conn) + "stopped listening")
+            AllPlayersDone(conn)
+            break
 
-    client.close()
+def AllPlayersDone(conn):
+    try:
+        print(playersReady)
+        print(playerTeams)
+        playerPower = calcBattle(playerTeams)
+
+        team = setTeam(playerTeams)
+        team0 = pickle.dumps(team[0])
+        team1 = pickle.dumps(team[1])
+        totalPower = pickle.dumps(playerPower)
+        totalPower2 = pickle.dumps(playerPower[1])
+        print(totalPower)
+        conn.send(team0)
+        conn.send(team1)
+        time.sleep(2)
+        conn.send(totalPower)
+        print(playerPower)
+    except:
+        print("Error")
 
 
-counter = 0
-while True:
-    conn, addr = s.accept()
-    # print(f"Got connection from {addr}")
-    # c.send(bytes("Thank you for connecting", "utf-8"))
-    conn.send(bytes("Thank you for connecting", "utf-8"))
-  #  if playersActive < 2:
-    if counter == 0:
-        thread1 = threading.Thread(target=NewClientSocketHandler, args=(conn, addr))
-        thread1.start()
-        counter += 1
-    elif counter == 1:
-        thread2 = threading.Thread(target=NewClientSocketHandler, args=(conn, addr))
-        thread2.start()
-        counter += 1
-  #  else:
-   #     conn.send(bytes("Failed to connect.", "utf-8"))
+def calcBattle(playersTeams):
+        newPT = getPlayerTeam(playersTeams)
+        finalScore = [0, 0]
 
+        for x in range(2):
+            for y in range(len(newPT[x])):
+                if x == 0:
+                    finalScore[0] += newPT[x][y].getAttackPower()
+                if x == 1:
+                    finalScore[1] += newPT[x][y].getAttackPower()
+
+        return finalScore
+
+
+def setTeam(team):
+    for x in range(2):
+        for y in range(len(team[x])):
+            team[x][y] = team[x][y].getName()
+    return team
+
+
+def getPlayerTeam(playersTeams):
+    newPT = playersTeams.copy()
+    for x in range(2):
+        for y in range(len(newPT[x])):
+            for z in range(len(unitList)):
+                if newPT[x][y] == unitList[z].getName():
+                    newPT[x][y] = unitList[z]
+                    break
+    return newPT
+
+# Do next job that is in the queue (handle connections, send commands)
+def work():
+    while True:
+        create_socket()
+        bind_socket()
+        accepting_connections()
+
+
+work()

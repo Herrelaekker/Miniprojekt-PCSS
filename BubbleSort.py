@@ -4,8 +4,7 @@ class BubbleSort(object):
         BubbleSort
     """
 
-    def __init__(self, unitList):
-        self.unitList = unitList
+    #def __init__(self):
 
     def UnitSwap(self, index, unitList):
         tempVal = unitList[index]

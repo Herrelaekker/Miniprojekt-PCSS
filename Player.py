@@ -1,15 +1,9 @@
-import cv2 as cv
-from Unit import unit
 import os
-import tkinter as tk
 from tkinter import *
-from PIL import ImageTk,Image
-import numpy as np
 from GUIWindow import GUIWindow
 from PIL import Image
 from UnitGenerator import unitGenerator
 from CardGenerator import cardGenerator
-from Client import Client
 
 class player(object):
     """
@@ -25,29 +19,22 @@ class player(object):
     unitList = unitGen.getUnits()
    # playerClient = Client()
 
-    window = None
    #  window2 = None
 
-    team = [None]*0
+    team = []
 
     def __init__(self, master, main):
-        print(":D ")
-
+        # Sætter hvert unit's card til at være det tilsvarende fra mappen "cards".
         f = 'cards'
-
         for x, file in enumerate(os.listdir(f)):
             print(file)
             f_img = f + "/" + file
             tempImg = Image.open(f_img)
 
             self.unitList[x].SetCard(tempImg)
-        #print(self.name)
 
         self.main = main
-
         self.window = GUIWindow(self.unitList, master, self)
-        #newWindow = tk.Toplevel(master)
-        #self.window2 = GUIWindow(self.unitList, newWindow)
 
     def getMain(self):
         return self.main
@@ -63,14 +50,12 @@ class player(object):
 
     def addToTeamList(self, u):
         self.team.append(u)
-       # self.printTeam()
 
     def removeFromTeamList(self,indexNum):
         self.team.remove(self.team[indexNum])
 
     def calcPower(self):
         self.totalPower = 0
-        #self.team = self.window.getTeamList()
         for x in range(len(self.team)):
             self.totalPower += self.team[x].getAttackPower()
 
@@ -78,21 +63,8 @@ class player(object):
         self.calcPower()
         return self.totalPower
 
-    def getCurDone(self):
-        return self.window.getIfDone()
-
     def getGUIWindow(self):
         return self.window
 
     def getUnitList(self):
         return self.unitList
-
-
-#root.withdraw()
-
-#img=cv.imread("Warrior.png")
-#team=[unit(2,1,img,""),unit(3,2,img,"")]
-
-
-# p1.calcPower()
-# print(p1.getTotalPower())

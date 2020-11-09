@@ -2,17 +2,7 @@ from PIL import Image, ImageDraw, ImageFont
 from Unit import unit
 
 class cardGenerator (unit):
-    statsBar = Image.open('icons\statsBar.png')
-    statsBar0 = Image.open('icons\statsBar0.png')
-    statsBar1 = Image.open('icons\statsBar1.png')
-    statsBar2 = Image.open('icons\statsBar2.png')
-    statsBar3 = Image.open('icons\statsBar3.png')
-    nameBar = Image.open('icons\mameBar.png')
-    icon = Image.open('icons\character.png')
-    attackPower = 10
-    name = 'default name'
 
-    #Ved ikke hvor meget af det her, der var nødvendigt. Hvis man ved, om  det kan fjernes er man meget velkommen til det
     def __init__(self):
         self.statsBar = Image.open('icons\statsBar.png')
         self.statsBar0 = Image.open('icons\statsBar0.png')
@@ -56,7 +46,6 @@ class cardGenerator (unit):
         new_image.paste(image2, (image1_size[0], 0))
         new_image.paste(image3, (100, image2_size[0]))
         new_image.save("Image Examples\merged_image.png","PNG")
-        #new_image.show()
 
         #Henter billedet der skal skrives på
         base = Image.open("Image Examples\merged_image.png").convert("RGBA")
@@ -80,11 +69,6 @@ class cardGenerator (unit):
         #Gemmer outputtet som en png
         out = Image.alpha_composite(base, txt)
         out.save('cards/'+fileName, 'PNG')
-        # out.show()
-
-
-
-
 
     def debug(self):
         print(self.attackPower)
