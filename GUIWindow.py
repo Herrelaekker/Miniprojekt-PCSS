@@ -20,7 +20,7 @@ class GUIWindow():
     sortStr = ["Highest Power", "Lowest Power", "Highest Cost", "Lowest Cost", "Highest Rank", "Lowest Rank"]
     curSortNum = 0  # Variabel der viser hvilken string vi er ved i sortStr-arrayet.
 
-    row1 = 8  # Rækker af felter der skal laves
+    row1 = 9  # Rækker af felter der skal laves
     col1 = 5  # Kolonner i første antal felter (Unit Listen)
     row2 = 2
     col2 = 1  # Kolonner i anden række (der skiller units og team)

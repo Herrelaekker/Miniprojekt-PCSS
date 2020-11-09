@@ -30,3 +30,13 @@
 12, 34, icons/character30.png, gamer hacker, 2
 16, 1867, icons/character31.png, samurai gamer, 0
 111, 111, icons/character32.png, tall gamer, 1
+1, 1, icons/character33.png, anurognathus gamer, 1
+1, 1, icons/character34.png, confused gamer, 3
+1, 1, icons/character35.png, frog gamer, 2
+1, 1, icons/character36.png, holy gamer, 1
+1, 1, icons/character37.png, lucky gamer, 3
+1, 1, icons/character38.png, math gamer, 3
+1, 1, icons/character39.png, not-a-gamer, 3
+1, 1, icons/character40.png, pipe gamer, 3
+1, 1, icons/character41.png, sushi gamer, 2
+1, 1, icons/character42.png, swirly gamer, 1
