@@ -14,7 +14,7 @@ class BubbleSort(object):
         self.flag += 1
 
 
-    # CurSortNum = "Most Power", "Least Power", "Biggest Cost", "Smallest Cost"
+    # sortStr = ["Most Power", "Least Power", "Highest Cost", "Lowest Cost", "Highest Rank", "Lowest Rank"]
     # BubbleSort
     def SortUnits(self, curSortNum, unitList):
         while True:
@@ -31,6 +31,12 @@ class BubbleSort(object):
                         self.UnitSwap(x, unitList)
                 elif curSortNum == 3:
                     if unitList[x].getCost() > unitList[x + 1].getCost():
+                        self.UnitSwap(x, unitList)
+                elif curSortNum == 4:
+                    if unitList[x].getRole() > unitList[x + 1].getRole():
+                        self.UnitSwap(x, unitList)
+                elif curSortNum == 5:
+                    if unitList[x].getRole() < unitList[x + 1].getRole():
                         self.UnitSwap(x, unitList)
             if self.flag <= 0:
                 break
