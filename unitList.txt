@@ -1,42 +1,42 @@
-20, 10, icons/character01.png, cursed gamer, 0
-20, 100, icons/character02.png, nose god gamer, 1
-200, 22, icons/character03.png, average gamer, 2
-100, 250, icons/character04.png, young gamer, 3
-200, 300, icons/character05.png, sweaty gamer, 2
-500, 700, icons/character06.png, punished gamer, 2
-100, 100, icons/character07.png, still'a gamer, 1
-70, 230, icons/character08.png, sexy gamer, 0
-100, 330, icons/character09.png, cowboy gamer, 0
-90, 270, icons/character10.png, nordic gamer, 3
-10, 10, icons/character11.png, colonial gamer, 3
-10, 15, icons/character12.png, revolutionary gamer, 2
-70, 70, icons/character13.png, french gamer, 1
-700, 150000, icons/character14.png, mysterious gamer, 3
-80, 100, icons/character15.png, cute school gamer, 1
-190, 120, icons/character16.png, construction gamer, 2
-120, 140, icons/character17.png, one-eyed gamer, 3
-150, 1920, icons/character18.png, dragonborn gamer, 1
-120, 140, icons/character19.png, high society gamer, 0
-520, 15903840, icons/character20.png, society gamer, 0
-60, 2077, icons/character21.png, delayed gamer, 2
-1, 1, icons/character22.png, special gamer, 3
-69, 69, icons/character23.png, (<-- nice)true gamer, 3
-50, 120, icons/character24.png, orange gamer, 1
-60, 130, icons/character25.png, socially distant gamer, 3
-12, 12, icons/character26.png, abstract gamer, 2
-555, 555, icons/character27.png, gamer giovanna, 0
-1, 2, icons/character28.png, hillbilly gamer, 3
-200, 600, icons/character29.png, villain gamer, 1
-12, 34, icons/character30.png, gamer hacker, 2
-16, 1867, icons/character31.png, samurai gamer, 0
-111, 111, icons/character32.png, tall gamer, 1
-1, 1, icons/character33.png, anurognathus gamer, 1
-1, 1, icons/character34.png, confused gamer, 3
-1, 1, icons/character35.png, frog gamer, 2
-1, 1, icons/character36.png, holy gamer, 1
-1, 1, icons/character37.png, lucky gamer, 3
-1, 1, icons/character38.png, math gamer, 3
-1, 1, icons/character39.png, not-a-gamer, 3
-1, 1, icons/character40.png, pipe gamer, 3
-1, 1, icons/character41.png, sushi gamer, 2
-1, 1, icons/character42.png, swirly gamer, 1
+-100, -300, icons/character01.png, cursed gamer, 1
+-30, -90, icons/character02.png, nose god gamer, 3
+0, 1, icons/character03.png, average gamer, 3
+169, 669, icons/character04.png, young gamer, 3
+200, 850, icons/character05.png, sweaty gamer, 1
+5, 20, icons/character06.png, punished gamer, 3
+100, 450, icons/character07.png, still'a gamer, 1
+499, 2000, icons/character08.png, sexy gamer, 2
+20, 75, icons/character09.png, cowboy gamer, 2
+200, 790, icons/character10.png, nordic gamer, 3
+200, 800, icons/character11.png, colonial gamer, 2
+250, 1050, icons/character12.png, revolutionary gamer, 2
+500, 2100, icons/character13.png, french gamer, 1
+300, 1234, icons/character14.png, mysterious gamer, 2
+150, 580, icons/character15.png, cute school gamer, 3
+50, 150, icons/character16.png, construction gamer, 3
+1, 10, icons/character17.png, one-eyed gamer, 3
+100, 400, icons/character18.png, dragonborn gamer, 2
+300, 1345, icons/character19.png, high society gamer, 1
+1610, 6830, icons/character20.png, society gamer, 0
+400, 2077, icons/character21.png, delayed gamer, 1
+-50, -150, icons/character22.png, special gamer, 3
+69, 269, icons/character23.png, true gamer, 3
+250, 1100, icons/character24.png, orange gamer, 1
+333, 1500, icons/character25.png, socially distant gamer, 3
+250, 1000, icons/character26.png, abstract gamer, 3
+1200, 5559, icons/character27.png, golden gamer, 0
+10, 30, icons/character28.png, hillbilly gamer, 3
+-10, -30, icons/character29.png, villain gamer, 3
+690, 2500, icons/character30.png, hacker gamer, 1
+999, 4800, icons/character31.png, samurai gamer, 0
+100, 690, icons/character32.png, tall gamer, 0
+150, 600, icons/character33.png, anurognathus gamer, 2
+-25, -75, icons/character34.png, confused gamer, 2
+-70, -210, icons/character35.png, frog gamer, 2
+500, 2250, icons/character36.png, holy gamer, 0
+100, 360, icons/character37.png, lucky gamer, 3
+123, 456, icons/character38.png, math gamer, 3
+0, 100, icons/character39.png, not'a gamer, 0
+333, 1600, icons/character40.png, pipe gamer, 2
+400, 1750, icons/character41.png, sushi gamer, 2
+334, 1666, icons/character42.png, swirly gamer, 2
