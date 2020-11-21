@@ -80,7 +80,7 @@ def accepting_connections():
 
 
 
-def listen(conn, num):
+def listen(conn, playerID):
     while True:
         data = conn.recv(1024).decode()
         if data == "Done":
@@ -89,7 +89,7 @@ def listen(conn, num):
             print(pickle.loads(list))
            # playersReady += 1
             usedConnections.append(conn)
-            playersReady[num] = True
+            playersReady[playerID] = True
             break
     while True:
         if playersReady[0] and playersReady[1]:

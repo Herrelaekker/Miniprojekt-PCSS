@@ -6,18 +6,15 @@ class main(object):
 
     def __init__(self, root):
         self.root = root
-        self.pNum = ""
         self.player = player(self.root, self)
 
     # Laver en client som thread, som kan sende og modtager beskeder til og fra serveren.
     def startClient(self):
-        self.client = Client(self.pNum, self)
+        self.client = Client(self)
         self.client.start()
 
     # Sender beskeden Done til serveren.
     def doneButtonClicked(self):
-        totalPower = self.player.getTotalPower()
-        print(totalPower)
         self.client.setTeamToNames(self.player.getTeam())
         self.client.sendMessage("Done")
 

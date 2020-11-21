@@ -54,15 +54,6 @@ class player(object):
     def removeFromTeamList(self,indexNum):
         self.team.remove(self.team[indexNum])
 
-    def calcPower(self):
-        self.totalPower = 0
-        for x in range(len(self.team)):
-            self.totalPower += self.team[x].getAttackPower()
-
-    def getTotalPower(self):
-        self.calcPower()
-        return self.totalPower
-
     def getGUIWindow(self):
         return self.window
 

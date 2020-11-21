@@ -4,9 +4,8 @@ import pickle
 
 class Client(threading.Thread):
 
-    def __init__(self, pNum, main):
+    def __init__(self, main):
         threading.Thread.__init__(self)
-        self.pNum = pNum
         self.msg = ""
         self.team = []
         self.main = main
