@@ -10,7 +10,6 @@ all_address = []
 
 playersReady = [False, False]
 usedConnections = []
-playersConnected = 0
 playerTeams = []
 
 cardGen = cardGenerator()
@@ -18,7 +17,7 @@ unitGen = unitGenerator()
 unitGen.genUnits(cardGen, open('unitList.txt', 'r'))
 unitList = unitGen.getUnits()
 
-# Create a Socket ( connect two computers)
+# Create a Socket (connection between two computers)
 def create_socket():
     try:
         global host
@@ -32,7 +31,7 @@ def create_socket():
         print("Socket creation error: " + str(msg))
 
 
-# Binding the socket and listening for connections
+# Binding and listening for connections
 def bind_socket():
     try:
         print("Binding the Port: " + str(port))
@@ -47,33 +46,27 @@ def bind_socket():
 
 # Handling connection from multiple clients and saving to a list
 # Closing previous connections when server.py file is restarted
-numOfClients = 0
-threads =[]
+threads =[None,None]
 def accepting_connections():
 
     while True:
         try:
             conn, address = s.accept()
-       #     s.setblocking(1)  # prevents timeout
-
-            all_connections.append(conn)
-            all_address.append(address)
 
             print("Connection has been established :" + address[0])
 
-            print(playersConnected)
-            if playersConnected == 0:
-                thread = threading.Thread(target=lambda y=playersConnected, x=conn: listen(x,y))
-                threads.append(thread)
-                thread.daemon = True
-                thread.start()
-            elif playersConnected == 1:
-                thread1 = threading.Thread(target=lambda y=playersConnected, x=conn: listen(x,y))
-                threads.append(thread1)
-                thread1.daemon = True
-                thread1.start()
-
             playersConnected = len(all_connections)
+
+            for index in range(2):
+                if playersConnected == index:
+                    print("listening on " + str(playersConnected))
+                    threads[index] = threading.Thread(target=lambda y=playersConnected, x=conn: listen(x,y))
+                    #threads.append(thread)
+                    threads[index].daemon = True
+                    threads[index].start()
+
+            all_connections.append(conn)
+            all_address.append(address)
 
         except:
             print("Error accepting connections")
@@ -87,7 +80,6 @@ def listen(conn, playerID):
             list = conn.recv(100000)
             playerTeams.append(pickle.loads(list))
             print(pickle.loads(list))
-           # playersReady += 1
             usedConnections.append(conn)
             playersReady[playerID] = True
             break
@@ -107,15 +99,20 @@ def AllPlayersDone(conn):
         team0 = pickle.dumps(team[0])
         team1 = pickle.dumps(team[1])
         totalPower = pickle.dumps(playerPower)
-        totalPower2 = pickle.dumps(playerPower[1])
-        print(totalPower)
         conn.send(team0)
         conn.send(team1)
         time.sleep(2)
         conn.send(totalPower)
-        print(playerPower)
+
+        del all_connections[:]
+        del all_address[:]
+        del playerTeams[:]
+
+        for x in range(len(playersReady)):
+            playersReady[x] = False
+
     except:
-        print("Error")
+        print("Error (Probably happened when trying to connect to closed Client.)")
 
 
 def calcBattle(playersTeams):
@@ -149,12 +146,7 @@ def getPlayerTeam(playersTeams):
                     break
     return newPT
 
-# Do next job that is in the queue (handle connections, send commands)
-def work():
-    while True:
-        create_socket()
-        bind_socket()
-        accepting_connections()
 
-
-work()
+create_socket()
+bind_socket()
+accepting_connections()

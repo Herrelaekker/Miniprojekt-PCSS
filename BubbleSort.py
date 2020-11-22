@@ -4,8 +4,6 @@ class BubbleSort(object):
         BubbleSort
     """
 
-    #def __init__(self):
-
     def UnitSwap(self, index, unitList):
         tempVal = unitList[index]
         unitList[index] = unitList[index + 1]
@@ -18,7 +16,7 @@ class BubbleSort(object):
     def SortUnits(self, curSortNum, unitList):
         while True:
             self.flag = 0
-            for x in range(len(unitList) - 1):  # If only 1 -> ERROR
+            for x in range(len(unitList) - 1):
                 if curSortNum == 0:
                     if unitList[x].getAttackPower() < unitList[x + 1].getAttackPower():
                         self.UnitSwap(x, unitList)

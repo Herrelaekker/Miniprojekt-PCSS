@@ -27,12 +27,13 @@ class player(object):
         # Sætter hvert unit's card til at være det tilsvarende fra mappen "cards".
         f = 'cards'
         for x, file in enumerate(os.listdir(f)):
-            print(file)
+            # print(file)
             f_img = f + "/" + file
             tempImg = Image.open(f_img)
 
             self.unitList[x].SetCard(tempImg)
 
+        print("cards added")
         self.main = main
         self.window = GUIWindow(self.unitList, master, self)
 

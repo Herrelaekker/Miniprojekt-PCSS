@@ -83,7 +83,7 @@ class GUIWindow():
         self.sortLabel = tk.Label(self.leftFrame, text="Sort by:", font=self.sortFont)
         self.sortLabel.grid(row=1, column=1, sticky="news", pady=10)
 
-        #Laver en Fram hvor alle sorteringselementer bliver lagt ind i.
+        #Laver en Frame hvor alle sorteringselementer bliver lagt ind i.
         self.sortFrame = tk.Frame(self.leftFrame)
         self.sortFrame.grid(row=2, column=1, sticky="nw")
 
@@ -334,8 +334,6 @@ class GUIWindow():
 
 
     def UpdateSortButtons(self):
-        # self.sortStr = ["Highest Power", "Lowest Power", "Highest Cost", "Lowest Cost", "Highest Rank", "Lowest Rank"]
-
         # Laver hver knap...
         for x in range(len(self.sortStr)):
             # Hvis det er den nuværende valgt knap, så laver man knappen sunket ned. (Det ligner at knappen er valgt)
